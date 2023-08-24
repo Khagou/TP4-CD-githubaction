@@ -1,0 +1,12 @@
+# Adresse email de votre compte docker hub
+hub_docker_email: "max.verdom@gmail.com" # Change me
+# Nom d'utilisateur de votre compte docker hub
+hub_docker_user: "khagu" # Change me
+# Mot de passe de votre compte docker hub
+hub_docker_password: "K@mtar2018" # Change me
+# Nom de votre container
+container_name: "app-python" # Change me
+# Nom de l'image docker
+image_name: "image-tp3" # Change me
+# Version de l'image
+image_version: "1.5" # Change me
