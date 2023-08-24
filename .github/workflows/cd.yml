@@ -38,7 +38,8 @@ jobs:
 
       - name: Check image
         run: |
-          docker scout ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO}}:${{ vars.DOCKER_IMAGE_VERSION }}
+          docker scout repo enable ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO}}
+          docker scout cves ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO}}:${{ vars.DOCKER_IMAGE_VERSION }}
 
   push-docker-image-to-GCR:
     needs: [check-docker-image]
