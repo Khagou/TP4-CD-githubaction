@@ -59,6 +59,7 @@ jobs:
           image: ${{ steps.meta.outputs.tags }}
           only-severities: critical,high
           exit-code: true
+          token: ${{ secrets.DOCKER_TOKEN }}
 
   push-docker-image-to-GCR:
     needs: [check-docker-image]
