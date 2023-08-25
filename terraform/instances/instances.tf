@@ -36,10 +36,10 @@ resource "google_compute_instance" "dev_instance" {
   tags         = ["dev"]
 
 
-  service_account {
-    email  = var.service_account_email
-    scopes = ["cloud-platform"]
-  }
+  # service_account {
+  #   email  = var.service_account_email
+  #   scopes = ["cloud-platform"]
+  # }
 
   boot_disk {
     initialize_params {
