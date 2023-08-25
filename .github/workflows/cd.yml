@@ -40,23 +40,23 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      # - name: Extract Docker metadata
-      #   id: meta
-      #   uses: docker/metadata-action@v4.4.0
-      #   with:
-      #     images: ${{ env.DOCKER_USER }}/${{ env.DOCKER_REPO }}
-      #     labels: |
-      #       org.opencontainers.image.revision=${{ env.SHA }}
-      #     tags: |
-      #       type=edge,branch=$repo.default_branch
-      #       type=semver,pattern=v{{version}}
-      #       type=sha,prefix=,suffix=,format=short
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
+          labels: |
+            org.opencontainers.image.revision=${{ env.SHA }}
+          tags: |
+            type=edge,branch=$repo.default_branch
+            type=semver,pattern=v{{version}}
+            type=sha,prefix=,suffix=,format=short
 
       - name: Check image
         uses: docker/scout-action@v0.18.1
         with:
           command: cves
-          # image: ${{ steps.meta.outputs.tags }}
+          image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
           only-severities: critical,high
           exit-code: true
           # token: ${{ secrets.DOCKER_TOKEN }}
