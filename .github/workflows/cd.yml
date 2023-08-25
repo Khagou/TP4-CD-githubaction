@@ -10,6 +10,12 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
+  List-Buckets:
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu latest
+
   deploiement-terraform:
     runs-on: ${{ vars.IMAGE_OS }}
 
