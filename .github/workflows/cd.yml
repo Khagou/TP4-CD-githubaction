@@ -44,7 +44,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.4.0
         with:
-          images: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
+          images: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
           labels: |
             org.opencontainers.image.revision=${{ env.SHA }}
           tags: |
@@ -56,7 +56,7 @@ jobs:
         uses: docker/scout-action@v0.18.1
         with:
           command: cves
-          image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
+          image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
           only-severities: critical,high
           exit-code: true
           # token: ${{ secrets.DOCKER_TOKEN }}
