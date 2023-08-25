@@ -29,8 +29,8 @@ variable "docker-repo" {
 # Instances variables
 ##########################################
 variable "dev" {
-  description = "Instance app python"
-  default = "python-app-instance" # Change me if you need
+  description = "Instance dev app python"
+  default = "python-dev-instance" # Change me if you need
 }
 
 variable "machine" {

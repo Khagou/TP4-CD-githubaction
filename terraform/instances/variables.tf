@@ -6,12 +6,10 @@ variable "service_account_email" {
   description = "email du compte de service"
 }
 
-variable "wordpress" {
-  description = "Nom de l'instance avec wordpress"
+variable "dev" {
+  description = "Nom de l'instance de dev"
 }
-variable "mariadb" {
-  description = "Nom de l'instance avec maraidb"
-}
+
 
 variable "machine" {
   description = "Machine type"
