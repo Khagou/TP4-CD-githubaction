@@ -39,6 +39,3 @@ module "instances" {
 #   repository_id = var.docker-repo
 # }
 
-module "api" {
-  project = var.project
-}
