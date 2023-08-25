@@ -56,7 +56,7 @@ jobs:
         uses: docker/scout-action@v0.18.1
         with:
           command: cves
-          image: ${{ steps.meta.outputs.tags }}
+          image: ${{ env.DOCKER_USER }}/${{ env.DOCKER_REPO }}:${{ env.DOCKER_IMAGE_VERSION }}
           only-severities: critical,high
           exit-code: true
           # token: ${{ secrets.DOCKER_TOKEN }}
