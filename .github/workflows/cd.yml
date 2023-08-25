@@ -57,7 +57,6 @@ jobs:
         with:
           command: cves
           image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
-          only-severities: critical,high
           exit-code: true
           # token: ${{ secrets.DOCKER_TOKEN }}
 
