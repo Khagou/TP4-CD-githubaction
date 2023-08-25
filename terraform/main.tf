@@ -29,7 +29,7 @@ module "instances" {
   source               = "./instances"
   subnet_self_link     = module.network.subnet_self_link
   service_account_email = module.service_account.service_account_email
-  test = var.test
+  dev = var.dev
   machine = var.machine
 }
 

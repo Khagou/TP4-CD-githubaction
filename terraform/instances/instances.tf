@@ -31,7 +31,7 @@
 ############# DEV INSTANCE CONFIG ###############
 
 resource "google_compute_instance" "dev_instance" {
-  name         = var.test
+  name         = var.dev
   machine_type = var.machine
   tags         = ["dev"]
 
