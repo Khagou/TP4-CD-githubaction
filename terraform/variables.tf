@@ -15,12 +15,19 @@ variable "gcp_region" {
   description = "The GCP region to deploy the runner into."
 }
 
+
+#########################################
 # Artifact registry repo variables
+#########################################
 variable "docker-repo" {
   description = "Repo name."
   default = "docker-repo" # Change me if you need
 }
+
+
+##########################################
 # Instances variables
+##########################################
 variable "test" {
   description = "Instance app python"
   default = "python-app-instance" # Change me if you need
@@ -31,7 +38,10 @@ variable "machine" {
   default = "e2-medium" # Change me if you need
 }
 
+
+#########################################
 # Service account variables
+#########################################
 variable "ansible_account_id" {
   description = "Service account id."
   default = "ansible" # Change me if you need
@@ -47,7 +57,10 @@ variable "ansible_key_filename" {
   default = "../ansible/ansible_service_account.json" # Change me if you need
 }
 
+
+#########################################
 # Network variables
+#########################################
 variable "subnet_cidr" {
   description = "CIDR block for the subnetwork."
   default = "10.0.0.0/24" # Change me if you need
@@ -55,4 +68,13 @@ variable "subnet_cidr" {
 variable "firewall_source" {
   description = "source block for the firewall."
   default = ["10.0.0.0/24"] # Change me if you need
+}
+
+
+#########################################
+# GKE Cluster variables
+#########################################
+variable "cluster_name" {
+    description = "Cluster name"
+    default = "deployment cluster"
 }

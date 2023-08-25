@@ -29,13 +29,16 @@ module "instances" {
   source               = "./instances"
   subnet_self_link     = module.network.subnet_self_link
   service_account_email = module.service_account.service_account_email
-  mariadb = var.maraidb
+  test = var.test
   machine = var.machine
-  wordpress = var.wordpress
 }
 
-module "artifact" {
-  source = "./artifact_registry_repo"
-  location = var.gcp_region
-  repository_id = var.docker-repo
+# module "artifact" {
+#   source = "./artifact_registry_repo"
+#   location = var.gcp_region
+#   repository_id = var.docker-repo
+# }
+
+module "api" {
+  project = var.project
 }
