@@ -80,8 +80,10 @@ jobs:
         id: "auth"
         uses: "google-github-actions/auth@v1"
         with:
+          token_format: "access_token"
           workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
           service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
+          access_token_lifetime: "300s"
 
       - name: "Terraform"
         run: |
@@ -120,7 +122,7 @@ jobs:
   #         context: ./docker-app/python
 
   Image-deployment:
-    # needs: [push-docker-image-to-GCR]
+    needs: [deploiement-terraform]
     runs-on: ${{ vars.IMAGE_OS }}
 
     steps:
