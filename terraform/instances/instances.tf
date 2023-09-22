@@ -35,12 +35,6 @@ resource "google_compute_instance" "dev_instance" {
   machine_type = var.machine
   tags         = ["dev"]
 
-
-  # service_account {
-  #   email  = var.service_account_email
-  #   scopes = ["cloud-platform"]
-  # }
-
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-11"
@@ -53,4 +47,6 @@ resource "google_compute_instance" "dev_instance" {
       # Autoriser l'accès par une adresse IP externe
     }
   }
+
+  metadata_startup_script = " docker run khagu/image-tp3:latest"
 }
