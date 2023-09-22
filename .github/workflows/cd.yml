@@ -76,15 +76,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: "Google auth"
-        id: "auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          token_format: "credential"
-          workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
-          service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
-          access_token_lifetime: "300s"
-
+      # - name: "Google auth"
+      #   id: "auth"
+      #   uses: "google-github-actions/auth@v1"
+      #   with:
+      #     token_format: "credential"
+      #     workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
+      #     service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
+      #     access_token_lifetime: "300s"
       - name: Terraform Init
         run: terraform init
         env:
