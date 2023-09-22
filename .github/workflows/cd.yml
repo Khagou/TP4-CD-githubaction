@@ -85,11 +85,21 @@ jobs:
           service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
           access_token_lifetime: "300s"
 
-      - name: "Terraform"
-        run: |
-          cd terraform
-          terraform init
-          terraform apply -auto-approve
+      - name: Terraform Init
+        run: terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/cd' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
   # push-docker-image-to-GCR:
   #   needs: [check-docker-image]
