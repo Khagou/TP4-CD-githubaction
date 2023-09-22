@@ -80,7 +80,7 @@ jobs:
         id: "auth"
         uses: "google-github-actions/auth@v1"
         with:
-          token_format: "access_token"
+          token_format: "credential"
           workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
           service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
           access_token_lifetime: "300s"
