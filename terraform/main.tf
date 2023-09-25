@@ -32,9 +32,9 @@ module "instances" {
   machine = var.machine
 }
 
-# module "artifact" {
-#   source = "./artifact_registry_repo"
-#   location = var.gcp_region
-#   repository_id = var.docker-repo
-# }
+module "artifact" {
+  source = "./artifact_registry_repo"
+  gcp_region = var.gcp_region
+  docker-repo = var.docker-repo
+}
 
