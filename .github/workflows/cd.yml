@@ -84,6 +84,9 @@ jobs:
       #     workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
       #     service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
       #     access_token_lifetime: "300s"
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+
       - name: Terraform Init
         run: |
           cd terraform  
