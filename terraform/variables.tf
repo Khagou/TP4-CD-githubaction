@@ -1,6 +1,6 @@
 variable "gcp_project" {
   type        = string
-  default     = "tp4-cd" # Change me
+  default     = "tp4-cd-400111" # Change me
   description = "The GCP project to deploy the runner into."
 }
 variable "gcp_zone" {
