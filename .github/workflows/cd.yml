@@ -162,7 +162,7 @@ jobs:
         with:
           instance_name: "python-dev-instance"
           zone: "eu-west1-b"
-          ssh_private_key: "${{ secrets.GCP_SSH_PRIVATE_KEY }}"
+          ssh_private_key: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
   # ansible-playbook:
   #   runs-on: ${{ vars.IMAGE_OS}}

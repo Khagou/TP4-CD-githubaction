@@ -48,5 +48,8 @@ resource "google_compute_instance" "dev_instance" {
     }
   }
 
-  metadata_startup_script = " docker run khagu/image-tp3:latest"
+  metadata_startup_script = <<SCRIPT
+    sudo apt install docker
+    docker run khagu/image-tp3:latest
+    SCRIPT
 }

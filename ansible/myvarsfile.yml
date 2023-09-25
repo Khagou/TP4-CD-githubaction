@@ -9,4 +9,4 @@ container_name: "app-python" # Change me
 # Nom de l'image docker
 image_name: "image-tp3" # Change me
 # Version de l'image
-image_version: "1.5" # Change me
+image_version: "1" # Change me
