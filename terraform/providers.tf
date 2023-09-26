@@ -3,3 +3,10 @@ provider "google" {
   region      = var.gcp_region
   zone        = var.gcp_zone
 }
+
+terraform {
+  backend "gcs" {
+    bucket = "tp4-cd-tfstate"
+    prefix = "terraform/state"
+  }
+}

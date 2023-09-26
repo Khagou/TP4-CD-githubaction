@@ -1,5 +1,5 @@
 #!/bin/bash
-export PROJET=tp4-cd # Change me
+export PROJET=tp4-cd-400111 # Change me
 
 gcloud config set project $PROJET
 

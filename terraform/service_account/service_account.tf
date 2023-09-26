@@ -1,11 +1,11 @@
 # service_account/service_account.tf
 
-resource "google_service_account" "service_account_ansible" {
+resource "google_service_account" "service_account_github_action" {
   account_id   = var.ansible_account_id
   display_name = var.ansible_display_name
 }
 
-resource "google_service_account_key" "service_account_ansible" {
+resource "google_service_account_key" "service_account_github_action" {
   service_account_id = google_service_account.service_account_ansible
   public_key_type    = "TYPE_X509_PEM_FILE"
 }
