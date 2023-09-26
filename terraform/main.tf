@@ -1,8 +1,14 @@
 # main.tf
-module "api" {
-  source = "./api"
-  project = var.gcp_project
+provider "google" {
+  project     = var.gcp_project
+  region      = var.gcp_region
+  zone        = var.gcp_zone
 }
+
+# module "api" {
+#   source = "./api"
+#   project = var.gcp_project
+# }
 module "network" {
   depends_on = [ module.api ]
   source       = "./network"
