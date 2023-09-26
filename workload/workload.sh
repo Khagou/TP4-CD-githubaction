@@ -7,6 +7,8 @@ gcloud services enable cloudresourcemanager.googleapis.com --project=$PROJET
 gcloud services enable artifactregistry.googleapis.com --project=$PROJET
 gcloud services enable compute.googleapis.com --project=$PROJET
 gcloud services enable iam.googleapis.com --project=$PROJET
+gcloud storage buckets create gs://tp4-cd-tfstate --project=$PROJET
+
 
 if [ ! -d "workload" ]; then
     echo "Importez le dossier workload"

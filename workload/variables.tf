@@ -24,7 +24,7 @@ variable "project_id" {
 variable "pool_id" {
   type        = string
   description = "Workload Identity Pool ID"
-  default = "gh-actions-pool"
+  default = "gh-action-pool"
 }
 
 variable "pool_display_name" {

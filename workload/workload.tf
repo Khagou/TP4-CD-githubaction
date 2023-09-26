@@ -62,6 +62,11 @@ resource "google_service_account" "github-actions" {
   account_id   = "github-actions"
   display_name = "Service Account used for GitHub Actions"
 }
+resource "google_service_account" "terraform" {
+  project      = var.gcp_project
+  account_id   = "terraform"
+  display_name = "Service Account used for Terraform deployment"
+}
 
 resource "google_iam_workload_identity_pool" "main" {
   provider                  = google-beta
@@ -93,16 +98,10 @@ resource "google_service_account_iam_member" "wif-sa" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.main.name}/${each.value.attribute}"
 }
-
-# module "gh_oidc" {
-#   source      = "terraform-google-modules/github-actions-runners/google//modules/gh-oidc"
-#   project_id  = var.gcp_project
-#   pool_id     = "github-action-pool"
-#   provider_id = "github-provider"
-#   sa_mapping = {
-#     "foo-service-account" = {
-#       sa_name   = "projects/${var.gcp_project}/serviceAccounts/${var.sa_email}"
-#       attribute = "attribute.repository/${var.user}/tp4-cd"
-#     }
-#   }
-# }
+resource "google_service_account_iam_binding" "terraform" {
+  service_account_id = google_service_account.terraform.name
+  role               = "roles/editor"
+   members = [
+    "serviceAccount:${google_service_account.terraform.email}",
+  ]
+}
