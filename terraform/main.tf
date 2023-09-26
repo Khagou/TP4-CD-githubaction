@@ -10,13 +10,13 @@ provider "google" {
 #   project = var.gcp_project
 # }
 module "network" {
-  depends_on = [ module.api ]
+  # depends_on = [ module.api ]
   source       = "./network"
   subnet_cidr = var.subnet_cidr
 }
 
 module "firewall" {
-  depends_on = [ module.api ]
+  # depends_on = [ module.api ]
   source           = "./firewall"
   network_self_link = module.network.network_self_link
   firewall_source = var.firewall_source
