@@ -118,6 +118,9 @@ jobs:
   push-docker-image-to-GCR:
     # needs: [check-docker-image]
     runs-on: ${{ vars.IMAGE_OS }}
+    permissions:
+      contents: "read"
+      id-token: "write"
 
     steps:
       - uses: actions/checkout@v3
