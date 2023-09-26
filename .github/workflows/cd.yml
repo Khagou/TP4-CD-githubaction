@@ -146,7 +146,7 @@ jobs:
           image_name: tp4-cd
           image_tag: 1
           dockerfile: ./docker-app/python/Dockerfile
-          context: ./docker-app/python
+          context: ./
 
   # Image-deployment:
   #   needs: [deploiement-terraform]
