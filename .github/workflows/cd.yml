@@ -68,52 +68,52 @@ jobs:
   #         exit-code: true
   #         # token: ${{ secrets.DOCKER_TOKEN }}
 
-  deploiement-terraform:
-    # needs: [check-docker-image]
-    permissions:
-      contents: "read"
-      id-token: "write"
-    runs-on: ${{ vars.IMAGE_OS }}
+  # deploiement-terraform:
+  #   # needs: [check-docker-image]
+  #   permissions:
+  #     contents: "read"
+  #     id-token: "write"
+  #   runs-on: ${{ vars.IMAGE_OS }}
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      # - name: "Google auth"
-      #   id: "auth"
-      #   uses: "google-github-actions/auth@v1"
-      #   with:
-      #     token_format: "credential"
-      #     workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
-      #     service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
-      #     access_token_lifetime: "300s"
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@v2
+  #     # - name: "Google auth"
+  #     #   id: "auth"
+  #     #   uses: "google-github-actions/auth@v1"
+  #     #   with:
+  #     #     token_format: "credential"
+  #     #     workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
+  #     #     service_account: "${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}"
+  #     #     access_token_lifetime: "300s"
+  #     - name: Setup terraform
+  #       uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
-        run: |
-          cd terraform
-          terraform init
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      # - name: Terraform format
-      #   run: |
-      #     cd terraform
-      #     terraform fmt -check
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: |
-          cd terraform
-          terraform plan -input=false
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     - name: Terraform Init
+  #       run: |
+  #         cd terraform
+  #         terraform init
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     # - name: Terraform format
+  #     #   run: |
+  #     #     cd terraform
+  #     #     terraform fmt -check
+  #     # Generates an execution plan for Terraform
+  #     - name: Terraform Plan
+  #       run: |
+  #         cd terraform
+  #         terraform plan -input=false
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/cd' && github.event_name == 'push'
-        run: |
-          cd terraform
-          terraform apply -auto-approve -input=false
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     - name: Terraform Apply
+  #       if: github.ref == 'refs/heads/cd' && github.event_name == 'push'
+  #       run: |
+  #         cd terraform
+  #         terraform apply -auto-approve -input=false
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
   push-docker-image-to-GCR:
     # needs: [check-docker-image]
@@ -141,7 +141,7 @@ jobs:
       - name: "Build and push"
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          registry: gcr.io
+          registry: gcr.io/docker-repo
           project_id: ${{ vars.GCP_PROJECT }}
           image_name: tp4-cd
           image_tag: 1

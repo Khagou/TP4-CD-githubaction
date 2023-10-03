@@ -7,6 +7,7 @@ gcloud services enable cloudresourcemanager.googleapis.com --project=$PROJET
 gcloud services enable artifactregistry.googleapis.com --project=$PROJET
 gcloud services enable compute.googleapis.com --project=$PROJET
 gcloud services enable iam.googleapis.com --project=$PROJET
+gcloud services enable containerregistry.googleapis.com --project=$PROJET
 gcloud storage buckets create gs://tp4-tfstate --project=$PROJET
 
 

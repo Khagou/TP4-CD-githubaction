@@ -98,8 +98,8 @@ resource "google_service_account" "terraform" {
   account_id   = "terraform"
   display_name = "Service Account used for Terraform deployment"
 }
-resource "google_service_account_iam_binding" "terraform" {
-  service_account_id = google_service_account.terraform.name
+resource "google_project_iam_binding" "terraform" {
+  project  = var.gcp_project
   role               = "roles/editor"
    members = [
     "serviceAccount:${google_service_account.terraform.email}",
