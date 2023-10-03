@@ -65,7 +65,7 @@ resource "google_service_account" "github-actions" {
 
 resource "google_iam_workload_identity_pool" "main" {
   provider                  = google-beta
-  project                   = var.project_id
+  project                   = var.gcp_project
   workload_identity_pool_id = var.pool_id
   display_name              = var.pool_display_name
   description               = var.pool_description
@@ -74,7 +74,7 @@ resource "google_iam_workload_identity_pool" "main" {
 
 resource "google_iam_workload_identity_pool_provider" "main" {
   provider                           = google-beta
-  project                            = var.project_id
+  project                            = var.gcp_project
   workload_identity_pool_id          = google_iam_workload_identity_pool.main.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
   display_name                       = var.provider_display_name

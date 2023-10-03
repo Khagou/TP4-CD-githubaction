@@ -1,6 +1,6 @@
 variable "gcp_project" {
   type        = string
-  default     = "tp4-cd-400111" # Change me
+  default     = "tp4-cd-400812" # Change me
   description = "The GCP project to deploy the runner into."
 }
 variable "gcp_zone" {
@@ -13,12 +13,6 @@ variable "gcp_region" {
   type        = string
   default     = "europe-west1" # Change me if you need
   description = "The GCP region to deploy the runner into."
-}
-
-variable "project_id" {
-  type        = string
-  description = "The project id to create Workload Identity Pool"
-  default     = "tp4-cd-400111"
 }
 
 variable "pool_id" {
