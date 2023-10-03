@@ -141,7 +141,7 @@ jobs:
       - name: "Build and push"
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          registry: gcr.io/docker-repo
+          registry: gcr.io
           project_id: ${{ vars.GCP_PROJECT }}
           image_name: tp4-cd
           image_tag: 1
