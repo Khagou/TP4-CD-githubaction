@@ -145,6 +145,7 @@ jobs:
       - name: "Build and push"
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
+          gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
           registry: europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo
           project_id: ${{ vars.GCP_PROJECT }}
           image_name: tp4-cd
