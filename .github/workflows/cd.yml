@@ -140,7 +140,8 @@ jobs:
 
       - name: Config docker
         run: |
-          gcloud auth configure-docker europe-west1-docker.pkg.dev
+          gcloud auth configure-docker \
+          europe-west1-docker.pkg.dev
 
       - name: "Build and push"
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
