@@ -11,6 +11,11 @@ variable "dev" {
 }
 
 
+variable "test" {
+  description = "Nom de l'instance de test"
+}
+
+
 variable "machine" {
   description = "Machine type"
 }
