@@ -9,7 +9,7 @@ resource "google_compute_instance" "test_instance" {
 
   boot_disk {
     initialize_params {
-      image = "cos-109-17800-0-45"
+      image = "projects/cos-cloud/global/images/cos-109-17800-0-45"
     }
   }
 
@@ -41,7 +41,7 @@ resource "google_compute_instance" "dev_instance" {
 
   boot_disk {
     initialize_params {
-      image = "Container-Optimized/109"
+      image = "projects/cos-cloud/global/images/cos-109-17800-0-45"
     }
   }
 
