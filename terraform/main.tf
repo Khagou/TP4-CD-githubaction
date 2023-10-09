@@ -30,7 +30,7 @@ module "firewall" {
 # }
 module "gce-container" {
   depends_on = [ module.network ]
-  source = "terraform-google-modules/container-vm/google"
+  source = "github.com/terraform-google-modules/terraform-google-container-vm"
   version = "~> 2.0"  # Upgrade the version if necessary.
 
   container = {
