@@ -5,7 +5,7 @@
 resource "google_compute_instance" "test_instance" {
   name         = var.test
   machine_type = var.machine
-  tags         = ["dev"]
+  tags         = ["test"]
 
   boot_disk {
     initialize_params {

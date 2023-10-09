@@ -34,7 +34,7 @@ variable "dev" {
 }
 variable "test" {
   description = "Instance dev app python"
-  default = "python-dev-instance" # Change me if you need
+  default = "python-test-instance" # Change me if you need
 }
 
 variable "machine" {
