@@ -38,6 +38,7 @@ module "instances" {
   dev = var.dev
   test = var.test
   machine = var.machine
+  sa_email = var.sa_email
 }
 
 # module "artifact" {

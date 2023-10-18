@@ -42,6 +42,12 @@ variable "machine" {
   default = "e2-medium" # Change me if you need
 }
 
+variable "sa_email" {
+  description = "Service Account email"
+  default = "terraform@tp4-cd-400812.iam.gserviceaccount.com"
+}
+
+
 
 #########################################
 # Service account variables

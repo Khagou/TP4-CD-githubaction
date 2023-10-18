@@ -19,3 +19,6 @@ variable "test" {
 variable "machine" {
   description = "Machine type"
 }
+variable "sa_email" {
+  description = "Service Account email"
+}

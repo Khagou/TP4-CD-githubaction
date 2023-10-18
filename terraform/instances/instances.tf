@@ -32,8 +32,9 @@ module "gce-container" {
     image = "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:1"
   }
 
-  cos_image_name = "cos-109-17800-0-45"
+  cos_image_name = "projects/cos-cloud/global/images/cos-109-17800-0-45"
 }
+
 resource "google_compute_instance" "dev_instance" {
   name         = var.dev
   machine_type = var.machine
@@ -62,5 +63,10 @@ resource "google_compute_instance" "dev_instance" {
     # Required label key.
     container-vm = module.gce-container.vm_container_label
   }
-
+  service_account {
+    email = var.sa_email
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+  }
 }
