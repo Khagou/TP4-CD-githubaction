@@ -1,4 +1,4 @@
-variable "network" {
+variable "subnetwork" {
   description = "Self link of the Google Cloud subnetwork."
 }
 
