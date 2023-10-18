@@ -7,7 +7,7 @@ provider "google" {
 
 module "instances" {
   source               = "./instances"
-  network    = var.subnetwork
+  subnetwork    = var.subnetwork
   dev = var.dev
   machine = var.machine
   sa_email = var.sa_email
