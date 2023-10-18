@@ -1,8 +1,4 @@
-provider "google" {
-  project     = var.gcp_project
-  region      = var.gcp_region
-  zone        = var.gcp_zone
-}
+# service_account / service_account.tf
 
 resource "google_service_account" "terraform" {
   project      = var.gcp_project

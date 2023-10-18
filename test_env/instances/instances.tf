@@ -1,29 +1,5 @@
 # instances/instances.tf
 
-############### TEST INSTANCE CONFIG #################
-######################################################
-
-resource "google_compute_instance" "test_instance" {
-  name         = var.test
-  machine_type = var.machine
-  tags         = ["test"]
-
-  boot_disk {
-    initialize_params {
-      image = "projects/cos-cloud/global/images/cos-109-17800-0-45"
-    }
-  }
-
-  network_interface {
-    subnetwork = var.subnet_self_link
-    access_config {
-      # Autoriser l'accès par une adresse IP externe
-    }
-  }
-
-}
-
-
 ############# DEV INSTANCE CONFIG ###############
 #################################################
 
@@ -32,16 +8,16 @@ module "gce-container" {
   version = "~> 2.0"  # Upgrade the version if necessary.
 
   container = {
-    image = "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:1"
+    image = "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest"
   }
 
   cos_image_name = "cos-109-17800-0-45"
 }
 
-resource "google_compute_instance" "dev_instance" {
-  name         = var.dev
+resource "google_compute_instance" "test_instance" {
+  name         = var.test
   machine_type = var.machine
-  tags         = ["dev"]
+  tags         = ["test"]
 
   boot_disk {
     initialize_params {

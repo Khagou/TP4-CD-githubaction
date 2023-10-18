@@ -1,4 +1,4 @@
-name: Integration Continue
+name: Pipeline Dev-env
 
 on:
   push:
@@ -97,7 +97,7 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          cd terraform
+          cd dev_env
           terraform plan -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
@@ -105,7 +105,7 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/cd' && github.event_name == 'push'
         run: |
-          cd terraform
+          cd dev_env
           terraform apply -auto-approve -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}

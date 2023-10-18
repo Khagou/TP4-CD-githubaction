@@ -14,3 +14,23 @@ variable "gcp_region" {
   default     = "europe-west1" # Change me if you need
   description = "The GCP region to deploy the runner into."
 }
+
+##########################################
+# Instances variables
+##########################################
+
+variable "test" {
+  description = "Instance dev app python"
+  default = "python-test-instance" # Change me if you need
+}
+
+variable "machine" {
+  description = "Machine type"
+  default = "e2-medium" # Change me if you need
+}
+
+variable "sa_email" {
+  description = "Service Account email"
+  default = "terraform@tp4-cd-400812.iam.gserviceaccount.com"
+}
+

@@ -10,12 +10,6 @@ gcloud services enable iam.googleapis.com --project=$PROJET
 gcloud services enable containerregistry.googleapis.com --project=$PROJET
 gcloud storage buckets create gs://tp4-tfstate --project=$PROJET
 
-
-if [ ! -d "workload" ]; then
-    echo "Importez le dossier workload"
-else
-    cd workload
-fi
 terraform init
 
 # 8- Application de la création avec Terraform

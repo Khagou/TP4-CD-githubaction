@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.13"
   backend "gcs" {
     bucket = "tp4-tfstate"
-    prefix = "terraform-workload/tfstate"
+    prefix = "terraform-env-base/tfstate"
   }
   
   required_providers {
