@@ -6,7 +6,6 @@ provider "google" {
 }
 
 module "instances" {
-  depends_on = [ module.network ]
   source               = "./instances"
   subnet_self_link     = module.network.subnet_self_link
   # service_account_email = module.service_account.service_account_email
