@@ -43,10 +43,40 @@ jobs:
           exit-code: true
           # token: ${{ secrets.DOCKER_TOKEN }}
 
+  ##### Push img to GAR ######
+  ############################
+  push-docker-image-to-GAR:
+    needs: [check-docker-image]
+    runs-on: ${{ vars.IMAGE_OS }}
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: "Google auth"
+      #   id: "auth"
+      #   uses: "google-github-actions/auth@v1"
+      #   with:
+      #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+      #     service_account: ${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}
+
+      - name: "Build and push"
+        uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+        with:
+          gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+          registry: europe-west1-docker.pkg.dev
+          project_id: ${{ vars.GCP_PROJECT }}/docker-repo
+          image_name: tp4-cd
+          image_tag: 1
+          dockerfile: ./docker-app/python/Dockerfile
+          context: ./
+
   ###### Deploiement terraform ######
   ###################################
   deploiement-terraform:
-    # needs: [check-docker-image]
+    needs: [push-docker-image-to-GAR]
     permissions:
       contents: "read"
       id-token: "write"
@@ -64,11 +94,7 @@ jobs:
           terraform init
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      # - name: Terraform format
-      #   run: |
-      #     cd terraform
-      #     terraform fmt -check
-      # Generates an execution plan for Terraform
+
       - name: Terraform Plan
         run: |
           cd terraform
@@ -83,33 +109,3 @@ jobs:
           terraform apply -auto-approve -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
-  ###### Push img to GAR ######
-  #############################
-  # push-docker-image-to-GAR:
-  #   # needs: [check-docker-image]
-  #   runs-on: ${{ vars.IMAGE_OS }}
-  #   permissions:
-  #     contents: "read"
-  #     id-token: "write"
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     # - name: "Google auth"
-  #     #   id: "auth"
-  #     #   uses: "google-github-actions/auth@v1"
-  #     #   with:
-  #     #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-  #     #     service_account: ${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}
-
-  #     - name: "Build and push"
-  #       uses: RafikFarhad/push-to-gcr-github-action@v5-beta
-  #       with:
-  #         gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
-  #         registry: europe-west1-docker.pkg.dev
-  #         project_id: ${{ vars.GCP_PROJECT }}/docker-repo
-  #         image_name: tp4-cd
-  #         image_tag: 1
-  #         dockerfile: ./docker-app/python/Dockerfile
-  #         context: ./
