@@ -1,6 +1,7 @@
 # instances/instances.tf
 
 ############### TEST INSTANCE CONFIG #################
+######################################################
 
 resource "google_compute_instance" "test_instance" {
   name         = var.test
@@ -24,6 +25,8 @@ resource "google_compute_instance" "test_instance" {
 
 
 ############# DEV INSTANCE CONFIG ###############
+#################################################
+
 module "gce-container" {
   source = "terraform-google-modules/container-vm/google"
   version = "~> 2.0"  # Upgrade the version if necessary.
