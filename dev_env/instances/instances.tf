@@ -26,7 +26,7 @@ resource "google_compute_instance" "dev_instance" {
   }
 
   network_interface {
-    network = var.network
+    subnetwork = var.subnetwork
     access_config {
       # Autoriser l'accès par une adresse IP externe
     }
