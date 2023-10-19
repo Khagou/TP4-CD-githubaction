@@ -21,6 +21,20 @@ resource "google_compute_instance" "test_instance" {
       # Autoriser l'accès par une adresse IP externe
     }
   }
+  service_account {
+    email = var.sa_email
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+  }
+
+  connection {
+    host = "${self.ipv4_address}"
+    type = "ssh"
+    user = var.sa_email
+    private_key = var.private_key
+  }
+
   provisioner "file" {
     source      = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
     destination = "/TP4-CD-githubaction"
@@ -33,10 +47,5 @@ resource "google_compute_instance" "test_instance" {
     ]
   }
 
-  service_account {
-    email = var.sa_email
-    scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-  }
+
 }

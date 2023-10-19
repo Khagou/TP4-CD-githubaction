@@ -38,3 +38,7 @@ variable "subnetwork" {
   description = "Subnetwork name"
   default = "my-subnetwork"
 }
+
+variable "private_key" {
+  description = "SA private key"
+}

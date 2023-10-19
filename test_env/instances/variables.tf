@@ -12,3 +12,7 @@ variable "machine" {
 variable "sa_email" {
   description = "Service Account email"
 }
+
+variable "private_key" {
+  description = "SA private key"
+}
