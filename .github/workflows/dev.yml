@@ -90,22 +90,28 @@ jobs:
 
       - name: Terraform Init
         run: |
+          export DOCKER_IMAGE_VERSION="${{ vars.DOCKER_IMAGE_VERSION}}"
           cd dev_env
           terraform init
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
 
       - name: Terraform Plan
         run: |
+          export DOCKER_IMAGE_VERSION="${{ vars.DOCKER_IMAGE_VERSION}}"
           cd dev_env
           terraform plan -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
         run: |
+          export DOCKER_IMAGE_VERSION="${{ vars.DOCKER_IMAGE_VERSION}}"
           cd dev_env
           terraform apply -auto-approve -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}

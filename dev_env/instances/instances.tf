@@ -8,7 +8,7 @@ module "gce-container" {
   version = "~> 2.0"  # Upgrade the version if necessary.
 
   container = {
-    image = "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd"
+    image = "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:${var.DOCKER_IMAGE_VERSION}"
   }
 
   cos_image_name = "cos-109-17800-0-45"

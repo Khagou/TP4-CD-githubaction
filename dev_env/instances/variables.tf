@@ -12,3 +12,7 @@ variable "machine" {
 variable "sa_email" {
   description = "Service Account email"
 }
+
+variable "DOCKER_IMAGE_VERSION" {
+  description = "Version of image docker"
+}
