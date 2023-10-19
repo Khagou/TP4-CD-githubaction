@@ -54,38 +54,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check env
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
         run: |
-          ls
-          pwd
+          cd test_env
+          terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      # - name: Setup terraform
-      #   uses: hashicorp/setup-terraform@v2
+      - name: Terraform Plan
+        run: |
+          cd test_env
+          terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      # - name: Terraform Init
-      #   run: |
-      #     export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-      #     cd test_env
-      #     terraform init
-      #   env:
-      #     GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      #     DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
-
-      # - name: Terraform Plan
-      #   run: |
-      #     export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-      #     cd test_env
-      #     terraform plan -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
-      #   env:
-      #     GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      #     DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
-
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-      #   run: |
-      #     export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-      #     cd test_env
-      #     terraform apply -auto-approve -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
-      #   env:
-      #     GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      #     DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: |
+          cd test_env
+          terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}

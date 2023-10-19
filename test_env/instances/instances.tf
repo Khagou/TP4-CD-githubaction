@@ -21,13 +21,13 @@ resource "google_compute_instance" "test_instance" {
     }
   }
     provisioner "file" {
-    source      = "compose-app/"
-    destination = "/app"
+    source      = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
+    destination = "/TP4-CD-githubaction"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "cd /app",
+      "cd /TP4-CD-githubaction/docker-test",
       "docker-compose up",
     ]
   }
