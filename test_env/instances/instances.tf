@@ -52,11 +52,13 @@ resource "null_resource" "remote_exec" {
 
     inline = [
       "curl https://github.com/Khagou/TP4-CD-githubaction.git",
+      "ls",
+      "pwd"
     ]
   }
 }
 
-resource "null_resource" "remote_exec" {
+resource "null_resource" "remote_exec2" {
   triggers = {
     instance_id = google_compute_instance.test_instance.id
   }
