@@ -28,19 +28,25 @@ resource "google_compute_instance" "test_instance" {
     ]
   }
 
-  connection {
-    host = "${self.ipv4_address}"
-    type = "ssh"
-    user = var.sa_email
-    private_key = var.private_key
-  }
 
   provisioner "file" {
+    connection {
+      host = "${self.ipv4_address}"
+      type = "ssh"
+      user = var.sa_email
+      private_key = var.private_key
+    }
     source      = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
     destination = "/TP4-CD-githubaction"
   }
 
   provisioner "remote-exec" {
+    connection {
+      host = "${self.ipv4_address}"
+      type = "ssh"
+      user = var.sa_email
+      private_key = var.private_key
+    }
     inline = [
       "cd /TP4-CD-githubaction/docker-test",
       "docker-compose up",
