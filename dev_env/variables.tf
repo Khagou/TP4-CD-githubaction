@@ -38,7 +38,7 @@ variable "subnetwork" {
   default = "my-subnetwork"
 }
 
-variable "DOCKER_IMAGE_VERSION" {
+variable "docker_image_version" {
   description = "Version of image docker"
 }
 

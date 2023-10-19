@@ -101,7 +101,7 @@ jobs:
         run: |
           export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
           cd dev_env
-          terraform plan -input=false
+          terraform plan -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
@@ -111,7 +111,7 @@ jobs:
         run: |
           export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
           cd dev_env
-          terraform apply -auto-approve -input=false
+          terraform apply -auto-approve -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
