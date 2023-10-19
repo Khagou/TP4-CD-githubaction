@@ -11,4 +11,5 @@ module "instances" {
   dev = var.dev
   machine = var.machine
   sa_email = var.sa_email
+  docker_image_version = var.docker_image_version
 }
