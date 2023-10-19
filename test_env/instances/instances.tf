@@ -21,7 +21,7 @@ resource "google_compute_instance" "test_instance" {
       # Autoriser l'accès par une adresse IP externe
     }
   }
-    provisioner "file" {
+  provisioner "file" {
     source      = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
     destination = "/TP4-CD-githubaction"
   }
