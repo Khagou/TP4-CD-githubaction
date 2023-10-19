@@ -64,10 +64,13 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
+      - name: Test PWD
+        run: |
+          pwd
+
       - name: Terraform Plan
         run: |
           cd test_env
-          pwd
           terraform plan -input=false -var private_key="${{ secrets.GOOGLE_CREDENTIALS}}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
