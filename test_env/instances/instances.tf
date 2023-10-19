@@ -34,7 +34,7 @@ resource "null_resource" "upload_files" {
   }
 
   provisioner "local-exec" {
-    command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
+    command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${var.sa_email}@${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:/TP4-CD-githubaction"
   }
 }
 
