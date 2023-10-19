@@ -27,31 +27,33 @@ resource "google_compute_instance" "test_instance" {
       "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
+}
+resource "null_resource" "upload_files" {
+  triggers = {
+    instance_id = google_compute_instance.test_instance.id
+  }
 
+  provisioner "local-exec" {
+    command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
+  }
+}
 
-  provisioner "file" {
-    connection {
-      host = "${self.ipv4_address}"
-      type = "ssh"
-      user = var.sa_email
-      private_key = var.private_key
-    }
-    source      = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
-    destination = "/TP4-CD-githubaction"
+resource "null_resource" "remote_exec" {
+  triggers = {
+    instance_id = google_compute_instance.test_instance.id
   }
 
   provisioner "remote-exec" {
     connection {
-      host = "${self.ipv4_address}"
-      type = "ssh"
-      user = var.sa_email
+      host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
+      type        = "ssh"
+      user        = var.sa_email
       private_key = var.private_key
     }
+
     inline = [
       "cd /TP4-CD-githubaction/docker-test",
       "docker-compose up",
     ]
   }
-
-
 }
