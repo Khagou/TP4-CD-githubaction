@@ -28,15 +28,16 @@ resource "google_compute_instance" "test_instance" {
     ]
   }
 }
-# resource "null_resource" "upload_files" {
-#   triggers = {
-#     instance_id = google_compute_instance.test_instance.id
-#   }
+resource "null_resource" "upload_files" {
+  triggers = {
+    instance_id = google_compute_instance.test_instance.id
+  }
 
-#   provisioner "local-exec" {
-#     command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
+  }
+}
+
 resource "null_resource" "remote_exec" {
   triggers = {
     instance_id = google_compute_instance.test_instance.id
@@ -51,29 +52,7 @@ resource "null_resource" "remote_exec" {
     }
 
     inline = [
-      "curl https://github.com/Khagou/TP4-CD-githubaction.git",
-      "ls",
-      "pwd"
-    ]
-  }
-}
-
-resource "null_resource" "remote_exec2" {
-  triggers = {
-    instance_id = google_compute_instance.test_instance.id
-  }
-
-  provisioner "remote-exec" {
-    connection {
-      host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
-      type        = "ssh"
-      user        = var.sa_email
-      private_key = var.private_key
-    }
-
-    inline = [
-      "cd /TP4-CD-githubaction/docker-test",
-      "docker-compose up",
+      "cd /TP4-CD-githubaction/docker-test && docker-compose up",
     ]
   }
 }
