@@ -27,6 +27,9 @@ resource "google_compute_instance" "test_instance" {
       "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
+  metadata = {
+    ssh-keys = "google-ssh {\"userName\":\"${var.sa_email}\",\"expireOn\":\"2025-12-31T23:59:59Z\"}"
+  }
 }
 resource "null_resource" "upload_files" {
   triggers = {
