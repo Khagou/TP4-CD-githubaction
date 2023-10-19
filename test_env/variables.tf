@@ -34,3 +34,7 @@ variable "sa_email" {
   default = "terraform@tp4-cd-400812.iam.gserviceaccount.com"
 }
 
+variable "subnetwork" {
+  description = "Subnetwork name"
+  default = "my-subnetwork"
+}

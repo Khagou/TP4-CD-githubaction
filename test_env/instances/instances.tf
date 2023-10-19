@@ -15,7 +15,8 @@ resource "google_compute_instance" "test_instance" {
   }
 
   network_interface {
-    subnetwork = var.subnet_self_link
+    subnetwork = var.subnetwork
+
     access_config {
       # Autoriser l'accès par une adresse IP externe
     }
