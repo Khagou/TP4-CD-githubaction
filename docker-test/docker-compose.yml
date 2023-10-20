@@ -35,8 +35,8 @@ services:
         target: /app/
   app:
     build:
-      context: /home/runner/TP4-CD-githubaction/docker-app/python
-      dockerfile: ./Dockerfile
+      context: /home/runner/TP4-CD-githubaction/
+      dockerfile: docker-app/python/Dockerfile
     ports:
       - 5000:5000
   robot:
