@@ -115,9 +115,6 @@ jobs:
       - name: Check files copy
         run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd"
 
-      - name: Install Docker and compose then compose up
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd docker-test && docker-compose up:"
-
   ###### Deploiement docker compose up ######
   ###########################################
   Deploiement-docker-compose:
