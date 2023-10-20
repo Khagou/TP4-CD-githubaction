@@ -66,10 +66,12 @@ jobs:
 
       - name: Create ssh-key
         run: |
-          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ secrets.username }}
+          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C $USER
           contenu=$(cat ~/.ssh/id_rsa.pub)
           export VARIABLE_CONTENU="$contenu"
           echo "$USER:$VARIABLE_CONTENU" > ssh_keys
+        env:
+          USER: ${{ secrets.username }}
 
       - name: Terraform Plan
         run: |
