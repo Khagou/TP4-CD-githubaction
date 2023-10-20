@@ -150,6 +150,8 @@ jobs:
         with:
           version: ">= 363.0.0"
           project_id: ${{ secrets.PROJECT_ID}}
+      - name: Configure gcloud
+        run: gcloud config set compute/zone europe-west1-c
 
       - name: Install Docker and compose then compose up
         run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="cd docker-test && docker-compose up:"
