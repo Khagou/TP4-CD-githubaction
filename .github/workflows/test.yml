@@ -64,15 +64,15 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Create ssh-key
-        run: |
-          ssh-keygen -t rsa -N "" -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key -C ${{ vars.user }}
-          contenu=$(cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key.pub)
-          export VARIABLE_CONTENU="$contenu"
-          echo "${{ vars.user }}:$VARIABLE_CONTENU" > /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
-          pwd
-          ls
-          cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
+      # - name: Create ssh-key
+      #   run: |
+      #     ssh-keygen -t rsa -N "" -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key -C ${{ vars.user }}
+      #     contenu=$(cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key.pub)
+      #     export VARIABLE_CONTENU="$contenu"
+      #     echo "${{ vars.user }}:$VARIABLE_CONTENU" > /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
+      #     pwd
+      #     ls
+      #     cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
 
       - name: Terraform Plan
         run: |

@@ -28,9 +28,9 @@ resource "google_compute_instance" "test_instance" {
       "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
-  metadata = {
-    ssh-keys = "${file(var.pub_key)}"
-  }
+  # metadata = {
+  #   ssh-keys = "${file(var.pub_key)}"
+  # }
 
 }
 
