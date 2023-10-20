@@ -28,7 +28,7 @@ resource "google_compute_instance" "test_instance" {
     ]
   }
   metadata = {
-    ssh-keys = "${file(var.private_key)}"
+    ssh-keys = "${file(var.pub_key)}"
   }
 }
 
