@@ -41,6 +41,7 @@ variable "subnetwork" {
 
 variable "private_key" {
   description = "SA private key"
+  default = "/home/runner/.ssh/ssh_keys"
 }
 
 variable "pub_key" {
