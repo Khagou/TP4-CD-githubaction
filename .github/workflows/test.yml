@@ -66,7 +66,11 @@ jobs:
 
       - name: Create ssh-key
         run: |
-          ssh-keygen -t rsa -N "" -f ~/.ssh/ssh_keys -C ${{ vars.user }}
+          if [ ! -f ~/.ssh/ssh_keys ]; then
+            ssh-keygen -t rsa -N "" -f ~/.ssh/ssh_keys -C ${{ vars.user }}
+          else
+            echo "La cle est deja presente"
+          fi
           contenu=$(cat ~/.ssh/ssh_keys.pub)
           export VARIABLE_CONTENU="$contenu"
           echo "${{ vars.user }}:$VARIABLE_CONTENU" > ssh_keys
