@@ -69,7 +69,7 @@ jobs:
           ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ secrets.user}}
           contenu=$(cat ~/.ssh/id_rsa.pub)
           export VARIABLE_CONTENU="$contenu"
-          echo "$USER:$VARIABLE_CONTENU" > ssh_keys
+          echo "${{ secrets.user}}:$VARIABLE_CONTENU" > ssh_keys
 
       - name: Terraform Plan
         run: |
