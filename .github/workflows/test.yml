@@ -87,6 +87,10 @@ jobs:
           ls
           ls ~/.ssh/
           cd test_env
+          echo "private key"
+          cat ${{ secrets.PRIVATE_KEY}}
+          echo "pub key"
+          cat ${{ secrets.PUB_KEY}}
           terraform apply -auto-approve -input=false -var private_key=${{ secrets.PRIVATE_KEY }} -var pub_key=${{ secrets.PUB_KEY }}
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}

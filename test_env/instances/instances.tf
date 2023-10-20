@@ -39,7 +39,7 @@ resource "null_resource" "upload_files" {
 
   provisioner "file" {
     connection {
-      host        = "${self.ipv4_address}"
+      host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
       user        = var.user
       private_key = var.private_key
@@ -56,7 +56,7 @@ resource "null_resource" "remote_exec" {
 
   provisioner "remote-exec" {
     connection {
-      host        = "${self.ipv4_address}"
+      host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
       user        = var.user
       private_key = var.private_key
