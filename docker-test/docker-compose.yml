@@ -27,7 +27,7 @@ services:
         target: /app/
   app:
     build:
-      context: C:\Users\Khagu\OneDrive\Documents\cours\DevOps\TP\TP3\app_python\python-api-handle-it
+      context: /home/runner/TP4-CD-githubaction
       dockerfile: "docker-app/python/Dockerfile"
     ports:
       - 5000:5000
