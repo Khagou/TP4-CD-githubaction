@@ -80,7 +80,7 @@ jobs:
           fi
           pwd
           ls
-          cat ssh_keys
+          cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
 
       - name: Terraform Plan
         run: |
