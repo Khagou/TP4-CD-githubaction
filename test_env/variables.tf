@@ -41,7 +41,7 @@ variable "subnetwork" {
 
 variable "private_key" {
   description = "SA private key"
-  default = "~/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key"
+  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key"
 }
 
 variable "pub_key" {
