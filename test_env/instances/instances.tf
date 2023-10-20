@@ -50,8 +50,8 @@ resource "google_compute_instance" "test_instance" {
     }
 
     inline = [
-      "apt-get update",
-      "apt-get install docker-compose-plugin",
+      "sudo apt-get update",
+      "sudo apt-get install docker-compose-plugin",
       "cd /TP4-CD-githubaction/docker-test && docker-compose up",
     ]
   }
