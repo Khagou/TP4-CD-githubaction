@@ -46,6 +46,7 @@ variable "private_key" {
 
 variable "pub_key" {
   description = "SA pub key"
+  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/ssh_keys"
 }
 variable "user" {
   description = "Service Account email"
