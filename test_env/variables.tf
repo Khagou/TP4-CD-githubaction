@@ -49,6 +49,6 @@ variable "pub_key" {
   default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys"
 }
 variable "user" {
-  description = "Service Account email"
+  description = "SSH user"
   default = "khagu8686"
 }

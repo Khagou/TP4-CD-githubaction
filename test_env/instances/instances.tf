@@ -30,13 +30,6 @@ resource "google_compute_instance" "test_instance" {
   metadata = {
     ssh-keys = "${file(var.pub_key)}"
   }
-}
-
-resource "null_resource" "upload_files" {
-  triggers = {
-    instance_id = google_compute_instance.test_instance.id
-  }
-
   provisioner "file" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
@@ -46,12 +39,6 @@ resource "null_resource" "upload_files" {
     }
     source = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
     destination = "~/TP4-CD-githubaction"
-  }
-}
-
-resource "null_resource" "remote_exec" {
-  triggers = {
-    instance_id = google_compute_instance.test_instance.id
   }
 
   provisioner "remote-exec" {
@@ -67,3 +54,17 @@ resource "null_resource" "remote_exec" {
     ]
   }
 }
+
+# resource "null_resource" "upload_files" {
+#   triggers = {
+#     instance_id = google_compute_instance.test_instance.id
+#   }
+
+# }
+
+# resource "null_resource" "remote_exec" {
+#   triggers = {
+#     instance_id = google_compute_instance.test_instance.id
+#   }
+
+# }
