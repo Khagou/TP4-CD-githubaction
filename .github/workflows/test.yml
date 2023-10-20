@@ -110,8 +110,13 @@ jobs:
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-c
 
+      - name: Clean know hosts
+        run: |
+          ls ~/.ssh
+          rm ~/.ssh/know_hosts
+
       - name: Copy files
         run: gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${{ vars.TEST_INSTANCE }}:~
 
       - name: Install Docker and compose then compose up
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="sudo apt-get update && sudo apt-get install gnupg && sudo apt-get install ca-certificates && sudo apt-get install lsb-release && sudo apt-get install curl && sudo install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && sudo chmod a+r /etc/apt/keyrings/docker.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="sudo apt-get update && sudo apt-get -y install gnupg && sudo apt-get -y install ca-certificates && sudo apt-get -y install lsb-release && sudo apt-get -y install curl && sudo install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && sudo chmod a+r /etc/apt/keyrings/docker.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
