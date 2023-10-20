@@ -70,6 +70,9 @@ jobs:
           contenu=$(cat ~/.ssh/id_rsa.pub)
           export VARIABLE_CONTENU="$contenu"
           echo "${{ secrets.user }}:$VARIABLE_CONTENU" > ssh_keys
+          pwd
+          ls
+          cat ssh_keys
 
       - name: Terraform Plan
         run: |
