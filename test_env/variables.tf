@@ -41,12 +41,12 @@ variable "subnetwork" {
 
 variable "private_key" {
   description = "SA private key"
-  default = "/home/runner/.ssh/ssh_keys"
+  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key"
 }
 
 variable "pub_key" {
   description = "SA pub key"
-  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/ssh_keys"
+  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys"
 }
 variable "user" {
   description = "Service Account email"

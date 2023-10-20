@@ -67,14 +67,14 @@ jobs:
       - name: Create ssh-key
         run: |
           if [ ! -f ~/.ssh/ssh_keys ]; then
-            ssh-keygen -t rsa -N "" -f ~/.ssh/ssh_keys -C ${{ vars.user }}
+            ssh-keygen -t rsa -N "" -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key -C ${{ vars.user }}
           else
             echo "La cle est deja presente"
           fi
-          contenu=$(cat ~/.ssh/ssh_keys.pub)
+          contenu=$(cat /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key.pub)
           export VARIABLE_CONTENU="$contenu"
-          if [ ! -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/ssh_keys ]; then
-            echo "${{ vars.user }}:$VARIABLE_CONTENU" > ssh_keys
+          if [ ! -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys ]; then
+            echo "${{ vars.user }}:$VARIABLE_CONTENU" > /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys
           else
             echo "fichier deja present"
           fi
@@ -92,7 +92,7 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
-          ls /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/
+          ls /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/
           ls /home/runner/.ssh/
           cd test_env
           echo "private key"
