@@ -110,10 +110,10 @@ jobs:
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-c
 
-      - name: Clean know hosts
-        run: |
-          ls ~/.ssh
-          rm ~/.ssh/know_hosts
+      # - name: Clean know hosts
+      #   run: |
+      #     ls ~/.ssh
+      #     rm ~/.ssh/know_hosts
 
       - name: Copy files
         run: gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${{ vars.TEST_INSTANCE }}:~
