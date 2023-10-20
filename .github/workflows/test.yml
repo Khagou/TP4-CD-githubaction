@@ -66,10 +66,10 @@ jobs:
 
       - name: Create ssh-key
         run: |
-          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ secrets.user}}
+          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ secrets.user }}
           contenu=$(cat ~/.ssh/id_rsa.pub)
           export VARIABLE_CONTENU="$contenu"
-          echo ${{ secrets.user }}":$VARIABLE_CONTENU" > ssh_keys
+          echo "${{ secrets.user }}:$VARIABLE_CONTENU" > ssh_keys
           pwd
           ls
           cat ssh_keys
@@ -84,6 +84,7 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
+          ls ~/.ssh/
           cd test_env
           terraform apply -auto-approve -input=false -var private_key=${{ secrets.PRIVATE_KEY }} -var pub_key=${{ secrets.PUB_KEY }}
         env:
