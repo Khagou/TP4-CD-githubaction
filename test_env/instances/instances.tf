@@ -10,7 +10,7 @@ resource "google_compute_instance" "test_instance" {
 
   boot_disk {
     initialize_params {
-      image = "projects/cos-cloud/global/images/cos-109-17800-0-45"
+      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230918"
     }
   }
 
@@ -51,7 +51,15 @@ resource "google_compute_instance" "test_instance" {
 
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install docker-compose-plugin",
+      "sudo apt-get install curl",
+      "sudo apt-get install gnupg",
+      "sudo apt-get install ca-certificates",
+      "sudo apt-get install lsb-release",
+      "sudo mkdir -p /etc/apt/keyrings",
+      "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg",
+      "echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginsudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginlinux/ubuntu   $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
+      "sudo apt-get update",
+      "sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin",
       "cd /TP4-CD-githubaction/docker-test && docker-compose up",
     ]
   }
