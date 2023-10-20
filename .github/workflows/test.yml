@@ -73,7 +73,11 @@ jobs:
           fi
           contenu=$(cat ~/.ssh/ssh_keys.pub)
           export VARIABLE_CONTENU="$contenu"
-          echo "${{ vars.user }}:$VARIABLE_CONTENU" > ssh_keys
+          if [ ! -f /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/ssh_keys ]; then
+            echo "${{ vars.user }}:$VARIABLE_CONTENU" > ssh_keys
+          else
+            echo "fichier deja present"
+          fi
           pwd
           ls
           cat ssh_keys
