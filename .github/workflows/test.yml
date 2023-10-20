@@ -84,6 +84,7 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
+          ls
           ls ~/.ssh/
           cd test_env
           terraform apply -auto-approve -input=false -var private_key=${{ secrets.PRIVATE_KEY }} -var pub_key=${{ secrets.PUB_KEY }}
