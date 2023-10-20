@@ -93,7 +93,6 @@ jobs:
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
           ls /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/
-          ls /home/runner/.ssh/
           cd test_env
           echo "private key"
           cat ${{ secrets.PRIVATE_KEY}}
