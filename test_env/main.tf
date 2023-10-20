@@ -13,6 +13,5 @@ module "instances" {
   machine = var.machine
   sa_email = var.sa_email
   private_key = var.private_key
-  user = var.user
   pub_key = var.pub_key
 }
