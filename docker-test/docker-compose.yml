@@ -2,37 +2,47 @@ version: "3"
 
 services:
   pylint:
-    build: "pylint/"
+    build:
+      context: ./pylint/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
   unittest:
-    build: "unittest/"
+    build:
+      context: ./unittest/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
   radon-cc:
-    build: "radon-cc/"
+    build:
+      context: ./radon-cc/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
   radon-raw:
-    build: "radon-raw/"
+    build:
+      context: ./radon-raw/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
   app:
     build:
-      context: /home/runner/TP4-CD-githubaction
-      dockerfile: "docker-app/python/Dockerfile"
+      context: /home/runner/TP4-CD-githubaction/"docker-app/python
+      dockerfile: ./Dockerfile"
     ports:
       - 5000:5000
   robot:
-    build: "robot/"
+    build:
+      context: ./robot/
+      dockerfile: ./Dockerfile
     environment:
       URL: app
       PORT: 5000
