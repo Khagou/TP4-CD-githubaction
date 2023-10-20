@@ -92,8 +92,8 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
-          ls
-          ls ~/.ssh/
+          ls /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/
+          ls /home/runner/.ssh/
           cd test_env
           echo "private key"
           cat ${{ secrets.PRIVATE_KEY}}
