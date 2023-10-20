@@ -48,7 +48,8 @@ variable "pub_key" {
   description = "SA pub key"
   default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys"
 }
+
 variable "user" {
   description = "SSH user"
-  default = "khagu8686"
+  default = "runner"
 }

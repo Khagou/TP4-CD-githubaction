@@ -42,7 +42,7 @@ resource "null_resource" "upload_files" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = var.sa_email
+      user        = var.user
       private_key = var.private_key
     }
 
@@ -70,7 +70,7 @@ resource "null_resource" "remote_exec" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = var.sa_email
+      user        = var.user
       private_key = var.private_key
     }
 

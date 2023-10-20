@@ -17,7 +17,9 @@ variable "private_key" {
   description = "SA private key"
 }
 
-
+variable "user" {
+  description = "SSH user"
+}
 
 variable "pub_key" {
   description = "SA pub key"

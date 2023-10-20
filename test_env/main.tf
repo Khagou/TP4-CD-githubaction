@@ -14,4 +14,5 @@ module "instances" {
   sa_email = var.sa_email
   private_key = var.private_key
   pub_key = var.pub_key
+  user = var.user
 }
