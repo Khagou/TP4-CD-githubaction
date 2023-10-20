@@ -34,7 +34,7 @@ resource "google_compute_instance" "test_instance" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = var.user
+      user        = var.sa_email
       private_key = var.private_key
     }
     source = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction"
@@ -45,7 +45,7 @@ resource "google_compute_instance" "test_instance" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = var.user
+      user        = var.sa_email
       private_key = var.private_key
     }
 
