@@ -5,7 +5,7 @@ variable "gcp_project" {
 }
 variable "gcp_zone" {
   type        = string
-  default     = "europe-west1-b" # Change me if you need
+  default     = "europe-west1-c" # Change me if you need
   description = "The GCP zone to deploy the runner into."
 }
 
