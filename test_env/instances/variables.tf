@@ -22,5 +22,5 @@ variable "user" {
 }
 
 variable "pub_key" {
-  description = "SA private key"
+  description = "SA pub key"
 }

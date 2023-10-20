@@ -44,7 +44,7 @@ variable "private_key" {
 }
 
 variable "pub_key" {
-  description = "SA private key"
+  description = "SA pub key"
 }
 variable "user" {
   description = "Service Account email"
