@@ -11,7 +11,7 @@ resource "google_compute_instance" "test_instance" {
 
   boot_disk {
     initialize_params {
-      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20230918"
+      image = "=projects/ubuntu-os-cloud/global/images/ubuntu-2304-lunar-amd64-v20231003"
     }
   }
 
