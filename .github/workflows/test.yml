@@ -82,6 +82,6 @@ jobs:
         if: github.ref == 'refs/heads/test' && github.event_name == 'push'
         run: |
           cd test_env
-          terraform apply -auto-approve -input=false -var private_key="${{ secrets.PRIVATE_KEY }} -var pub_key="${{ secrets.PUB_KEY }}"
+          terraform apply -auto-approve -input=false -var private_key="${{ secrets.PRIVATE_KEY }}" -var pub_key="${{ secrets.PUB_KEY }}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
