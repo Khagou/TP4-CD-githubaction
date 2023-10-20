@@ -28,7 +28,7 @@ resource "google_compute_instance" "test_instance" {
     ]
   }
   metadata = {
-    ssh-keys = "google-ssh {\"userName\":\"${var.sa_email}\",\"expireOn\":\"2025-12-31T23:59:59Z\"}"
+    ssh-keys = "${file(var.private_key)}"
   }
 }
 
@@ -38,7 +38,7 @@ resource "null_resource" "upload_files" {
   }
 
   provisioner "local-exec" {
-    command = "scp -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${var.sa_email}@${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
+    command = "scp -i ${var.private_key} -o StrictHostKeyChecking=no -r /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${var.user}@${google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip}:~/"
   }
 }
 
@@ -51,7 +51,7 @@ resource "null_resource" "remote_exec" {
     connection {
       host        = google_compute_instance.test_instance.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = var.sa_email
+      user        = var.user
       private_key = var.private_key
     }
 

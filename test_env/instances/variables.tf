@@ -16,3 +16,7 @@ variable "sa_email" {
 variable "private_key" {
   description = "SA private key"
 }
+
+variable "user" {
+  description = "Service Account email"
+}
