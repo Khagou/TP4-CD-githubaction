@@ -85,7 +85,7 @@ jobs:
       - name: Terraform Plan
         run: |
           cd test_env
-          terraform plan -input=false -var private_key=${{ secrets.PRIVATE_KEY }} -var pub_key=${{ secrets.PUB_KEY }}
+          terraform plan -input=false -var pub_key=${{ secrets.PUB_KEY }}
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
@@ -99,6 +99,6 @@ jobs:
           cat ${{ secrets.PRIVATE_KEY}}
           echo "pub key"
           cat ${{ secrets.PUB_KEY}}
-          terraform apply -auto-approve -input=false -var private_key=${{ secrets.PRIVATE_KEY }} -var pub_key=${{ secrets.PUB_KEY }}
+          terraform apply -auto-approve -input=false -var pub_key=${{ secrets.PUB_KEY }}
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
