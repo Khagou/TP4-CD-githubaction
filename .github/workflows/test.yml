@@ -66,10 +66,10 @@ jobs:
 
       - name: Create ssh-key
         run: |
-          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ secrets.user }}
+          ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -C ${{ vars.user }}
           contenu=$(cat ~/.ssh/id_rsa.pub)
           export VARIABLE_CONTENU="$contenu"
-          echo "${{ secrets.user }}:$VARIABLE_CONTENU" > ssh_keys
+          echo "${{ vars.user }}:$VARIABLE_CONTENU" > ssh_keys
           pwd
           ls
           cat ssh_keys
