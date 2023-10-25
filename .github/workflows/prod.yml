@@ -17,27 +17,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v4.4.0
-        with:
-          images: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
-          labels: |
-            org.opencontainers.image.revision=${{ env.SHA }}
-          tags: |
-            type=edge,branch=$repo.default_branch
-            type=semver,pattern=v{{version}}
-            type=sha,prefix=,suffix=,format=short
+      - name: Terraform Init
+        run: |
+          cd prod_env
+          terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Check image
-        uses: docker/scout-action@v0.18.1
-        with:
-          command: cves
-          image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
-          exit-code: true
+      - name: Terraform Plan
+        run: |
+          cd prod_env
+          terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
+        run: |
+          cd prod_env
+          terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
