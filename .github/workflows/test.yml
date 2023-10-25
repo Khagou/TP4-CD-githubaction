@@ -111,7 +111,7 @@ jobs:
       - name: Check files
         id: filecheck
         run: |
-          gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if [ -d "TP4-CD-githubaction" ]; then echo 'dossier déjà présent, suppression des anciens fichier puis remplacement par les nouveaux' && rm -rf TP4-CD-githubaction; fi"
+          gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if [ -d "TP4-CD-githubaction" ]; then echo 'dossier déjà présent, suppression des anciens fichier puis remplacement par les nouveaux' && sudo rm -rf TP4-CD-githubaction; fi"
 
       - name: Copy files
         run: |
