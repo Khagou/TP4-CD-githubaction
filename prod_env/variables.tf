@@ -20,9 +20,9 @@ variable "gcp_region" {
 #########################################
 variable "cluster_name" {
     description = "Cluster name"
-    default = "deployment cluster"
+    default = "deployment-cluster"
 }
 variable "node_pool_name" {
   description = "node pool name"
-  default = "deployment node pool"
+  default = "deployment-node-pool"
 }
