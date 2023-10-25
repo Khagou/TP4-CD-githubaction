@@ -22,3 +22,7 @@ variable "cluster_name" {
     description = "Cluster name"
     default = "deployment cluster"
 }
+variable "node_pool_name" {
+  description = "node pool name"
+  default = "deployment node pool"
+}
