@@ -10,6 +10,7 @@ services:
         source: ../app
         target: /app/
     tty: true
+    stdin_open: true
   unittest:
     build:
       context: ./unittest/
@@ -19,6 +20,7 @@ services:
         source: ../app
         target: /app/
     tty: true
+    stdin_open: true
   radon-cc:
     build:
       context: ./radon-cc/
@@ -28,6 +30,7 @@ services:
         source: ../app
         target: /app/
     tty: true
+    stdin_open: true
   radon-raw:
     build:
       context: ./radon-raw/
@@ -37,6 +40,7 @@ services:
         source: ../app
         target: /app/
     tty: true
+    stdin_open: true
   app:
     build:
       context: /home/runner/TP4-CD-githubaction/
@@ -57,3 +61,4 @@ services:
         source: ../app
         target: /app/
     tty: true
+    stdin_open: true
