@@ -11,7 +11,7 @@ variable "gcp_zone" {
 
 variable "gcp_region" {
   type        = string
-  default     = "europe-west1" # Change me if you need
+  default     = "europe-west2" # Change me if you need
   description = "The GCP region to deploy the runner into."
 }
 
