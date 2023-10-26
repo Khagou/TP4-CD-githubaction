@@ -13,6 +13,3 @@ variable "sa_email" {
   description = "Service Account email"
 }
 
-variable "docker_image_version" {
-  description = "Version of image docker"
-}
