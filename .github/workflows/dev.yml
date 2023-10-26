@@ -69,7 +69,7 @@ jobs:
   ###### Deploiement terraform ######
   ###################################
   deploiement-terraform:
-    # needs: [push-docker-image-to-GAR]
+    needs: [push-docker-image-to-GAR]
     permissions:
       contents: "read"
       id-token: "write"
