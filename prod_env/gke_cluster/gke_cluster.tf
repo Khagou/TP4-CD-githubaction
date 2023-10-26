@@ -1,6 +1,13 @@
-resource "google_service_account" "default" {
+resource "google_service_account" "gke" {
   account_id   = "gke-service-account"
   display_name = "Service Account for GKE"
+}
+resource "google_project_iam_binding" "gke" {
+  project  = var.gcp_project
+  role               = "roles/container.admin"
+   members = [
+    "serviceAccount:${google_service_account.gke.email}",
+  ]
 }
 
 resource "google_container_cluster" "primary" {

@@ -1,7 +1,9 @@
 variable "cluster_name" {
     description = "Cluster name"
 }
-
+variable "gcp_project" {
+  description = "The GCP project to deploy the runner into."
+}
 variable "gcp_region" {
   description = "Region name"
 }
