@@ -43,75 +43,75 @@ jobs:
   #         exit-code: true
   #         # token: ${{ secrets.DOCKER_TOKEN }}
 
-  # ##### Push img to GAR ######
-  # ############################
-  # push-docker-image-to-GAR:
-  #   needs: [check-docker-image]
-  #   runs-on: ${{ vars.IMAGE_OS }}
-  #   permissions:
-  #     contents: "read"
-  #     id-token: "write"
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     # - name: "Google auth"
-  #     #   id: "auth"
-  #     #   uses: "google-github-actions/auth@v1"
-  #     #   with:
-  #     #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-  #     #     service_account: ${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}
-
-  #     - name: "Build and push"
-  #       uses: RafikFarhad/push-to-gcr-github-action@v5-beta
-  #       with:
-  #         gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
-  #         registry: europe-west1-docker.pkg.dev
-  #         project_id: ${{ vars.GCP_PROJECT }}/docker-repo
-  #         image_name: tp4-cd
-  #         image_tag: 1
-  #         dockerfile: ./docker-app/python/Dockerfile
-  #         context: ./
-
-  ###### Deploiement terraform ######
-  ###################################
-  deploiement-terraform:
-    # needs: [push-docker-image-to-GAR]
+  ##### Push img to GAR ######
+  ############################
+  push-docker-image-to-GAR:
+    # needs: [check-docker-image]
+    runs-on: ${{ vars.IMAGE_OS }}
     permissions:
       contents: "read"
       id-token: "write"
-    runs-on: ${{ vars.IMAGE_OS }}
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@v2
+      # - name: "Google auth"
+      #   id: "auth"
+      #   uses: "google-github-actions/auth@v1"
+      #   with:
+      #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+      #     service_account: ${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}
 
-      - name: Terraform Init
-        run: |
-          export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-          cd dev_env
-          terraform init
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+      - name: "Build and push"
+        uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+        with:
+          gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+          registry: europe-west1-docker.pkg.dev
+          project_id: ${{ vars.GCP_PROJECT }}/docker-repo
+          image_name: tp4-cd
+          # image_tag: 1
+          dockerfile: ./docker-app/python/Dockerfile
+          context: ./
 
-      - name: Terraform Plan
-        run: |
-          export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-          cd dev_env
-          terraform plan -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+  # ###### Deploiement terraform ######
+  # ###################################
+  # deploiement-terraform:
+  #   # needs: [push-docker-image-to-GAR]
+  #   permissions:
+  #     contents: "read"
+  #     id-token: "write"
+  #   runs-on: ${{ vars.IMAGE_OS }}
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-        run: |
-          export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
-          cd dev_env
-          terraform apply -auto-approve -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Setup terraform
+  #       uses: hashicorp/setup-terraform@v2
+
+  #     - name: Terraform Init
+  #       run: |
+  #         export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
+  #         cd dev_env
+  #         terraform init
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+
+  #     - name: Terraform Plan
+  #       run: |
+  #         export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
+  #         cd dev_env
+  #         terraform plan -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
+
+  #     - name: Terraform Apply
+  #       if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+  #       run: |
+  #         export DOCKER_IMAGE_VERSION="${{ env.DOCKER_IMAGE_VERSION}}"
+  #         cd dev_env
+  #         terraform apply -auto-approve -input=false -var docker_image_version=${{ vars.DOCKER_IMAGE_VERSION}}
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         DOCKER_IMAGE_VERSION: ${{ vars.DOCKER_IMAGE_VERSION}}
