@@ -48,13 +48,14 @@ jobs:
   ###### Deploiement image et service ######
   ##########################################
 
-  Installation-Docker-et-Compose:
+  Deploiement-image-et-service:
     needs: [deploiement-terraform]
     permissions:
       contents: "read"
       id-token: "write"
     runs-on: ${{ vars.IMAGE_OS }}
-
+    outputs:
+      output1: ${{ steps.instancename.outputs.test }}
     steps:
       - uses: actions/checkout@v3
 
@@ -72,8 +73,15 @@ jobs:
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-b
 
+      - name: Get instance name
+        id: instancename
+        run: GKE_INSTANCE=$(gcloud compute instances list | awk '{print $2}' | grep "gke")
+
+      - name: Copy files
+        run: gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction $GKE_INSTANCE:~
+
       - name: Deploy image
-        run: kubectl apply -f ./prod-end/deployment.yml
+        run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/deployment.yml
 
       - name: Creation du service
-        run: kubectl apply -f ./prod-end/service.yml
+        run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml
