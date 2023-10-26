@@ -90,8 +90,8 @@ jobs:
           export KUBERNETES_MASTER=http://MasterIP:8080
           ls
           pwd
-          envsubst < ./prod-env/deployment.yml | kubectl apply -f -
-          envsubst < ./prod-env/service.yml | kubectl apply -f -
+          envsubst < ./prod_env/deployment.yml | kubectl apply -f -
+          envsubst < ./prod_env/service.yml | kubectl apply -f -
           kubectl get pods -o wide
           kubectl get svc -o wide
           sleep 60
