@@ -1,5 +1,5 @@
 resource "google_service_account" "gke" {
-  account_id   = "gke"
+  account_id   = "gke_service_account"
   display_name = "Service Account for GKE"
 }
 resource "google_project_iam_binding" "gke_container_admin" {
