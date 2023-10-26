@@ -10,9 +10,12 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  ###### Check docker image ######
-  ################################
-  check-docker-image:
+  ###### Deploiement terraform ######
+  ###################################
+  deploiement-terraform:
+    permissions:
+      contents: "read"
+      id-token: "write"
     runs-on: ${{ vars.IMAGE_OS }}
     steps:
       - uses: actions/checkout@v3
