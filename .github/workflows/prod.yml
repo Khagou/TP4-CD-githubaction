@@ -87,7 +87,7 @@ jobs:
       #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml"
       - name: Deploy
         run: |
-          export KUBERNETES_MASTER=http://MasterIP:8080
+          # export KUBERNETES_MASTER=http://MasterIP:8080
           ls
           pwd
           envsubst < ./prod_env/deployment.yml | kubectl apply -f -
