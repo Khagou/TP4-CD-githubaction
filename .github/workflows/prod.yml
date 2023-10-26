@@ -88,6 +88,8 @@ jobs:
       - name: Deploy
         run: |
           export KUBERNETES_MASTER=http://MasterIP:8080
+          ls
+          pwd
           envsubst < ./prod-end/deployment.yml | kubectl apply -f -
           envsubst < ./prod-end/service.yml | kubectl apply -f -
           kubectl get pods -o wide
