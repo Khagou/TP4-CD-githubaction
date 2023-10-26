@@ -44,3 +44,36 @@ jobs:
           terraform apply -auto-approve -input=false
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+  ###### Deploiement image et service ######
+  ##########################################
+
+  Installation-Docker-et-Compose:
+    needs: [deploiement-terraform]
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Auth to gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS_GKE}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: ">= 363.0.0"
+          project_id: ${{ secrets.PROJECT_ID}}
+
+      - name: Configure gcloud
+        run: gcloud config set compute/zone europe-west1-b
+
+      - name: Deploy image
+        run: kubectl apply -f ./prod-end/deployment.yml
+
+      - name: Creation du service
+        run: kubectl apply -f ./prod-end/service.yml
