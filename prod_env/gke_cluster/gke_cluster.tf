@@ -1,4 +1,5 @@
 resource "google_service_account" "gke" {
+  project      = var.gcp_project
   account_id   = "gke-service-account"
   display_name = "Service Account for GKE"
 }
