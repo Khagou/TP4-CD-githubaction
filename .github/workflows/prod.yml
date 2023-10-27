@@ -87,5 +87,5 @@ jobs:
       #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml"
       - name: Deploy
         run: |
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-400812 --config ./prod_env/cloudbuild.yml
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-400812 --config ./prod_env/cloudbuild.yml --gcs-log-dir=tp4-tfstate
           sleep 60
