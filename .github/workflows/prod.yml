@@ -87,11 +87,5 @@ jobs:
       #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml"
       - name: Deploy
         run: |
-          # export KUBERNETES_MASTER=http://MasterIP:8080
-          ls
-          pwd
-          envsubst < ./prod_env/deployment.yml | kubectl apply -f -
-          envsubst < ./prod_env/service.yml | kubectl apply -f -
-          kubectl get pods -o wide
-          kubectl get svc -o wide
+          gcloud builds submit --region=europe-west1-b --project=tp4-cd-400812 --config cloudbuild.yml
           sleep 60
