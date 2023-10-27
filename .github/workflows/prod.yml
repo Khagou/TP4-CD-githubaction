@@ -10,46 +10,46 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  ###### Deploiement terraform ######
-  ###################################
-  deploiement-terraform:
-    permissions:
-      contents: "read"
-      id-token: "write"
-    runs-on: ${{ vars.IMAGE_OS }}
-    steps:
-      - uses: actions/checkout@v3
+  # ###### Deploiement terraform ######
+  # ###################################
+  # deploiement-terraform:
+  #   permissions:
+  #     contents: "read"
+  #     id-token: "write"
+  #   runs-on: ${{ vars.IMAGE_OS }}
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@v2
+  #     - name: Setup terraform
+  #       uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
-        run: |
-          cd prod_env
-          terraform init
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     - name: Terraform Init
+  #       run: |
+  #         cd prod_env
+  #         terraform init
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Terraform Plan
-        run: |
-          cd prod_env
-          terraform plan -input=false
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     - name: Terraform Plan
+  #       run: |
+  #         cd prod_env
+  #         terraform plan -input=false
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
-        run: |
-          cd prod_env
-          terraform apply -auto-approve -input=false
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #     - name: Terraform Apply
+  #       if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
+  #       run: |
+  #         cd prod_env
+  #         terraform apply -auto-approve -input=false
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
   ###### Deploiement image et service ######
   ##########################################
 
   Deploiement-image-et-service:
-    needs: [deploiement-terraform]
+    # needs: [deploiement-terraform]
     permissions:
       contents: "read"
       id-token: "write"
