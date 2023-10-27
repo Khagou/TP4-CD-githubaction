@@ -11,4 +11,5 @@ module "gke_cluster" {
     gcp_region = var.gcp_region
     gcp_zone = var.gcp_zone 
     gcp_project = var.gcp_project
+    sa_email = var.sa_email
 }

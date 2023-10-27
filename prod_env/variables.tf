@@ -26,3 +26,8 @@ variable "node_pool_name" {
   description = "node pool name"
   default = "deployment-node-pool"
 }
+
+variable "sa_email" {
+  description = "service account email"
+  default = "terraform@tp4-cd-400812.iam.gserviceaccount.com"
+}

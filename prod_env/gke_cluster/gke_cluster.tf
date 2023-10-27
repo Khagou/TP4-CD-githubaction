@@ -1,29 +1,29 @@
-resource "google_service_account" "gke" {
-  project      = var.gcp_project
-  account_id   = "gke-service-account"
-  display_name = "Service Account for GKE"
-}
-resource "google_project_iam_binding" "gke_container_admin" {
-  project  = var.gcp_project
-  role               = "roles/container.admin"
-   members = [
-    "serviceAccount:${google_service_account.gke.email}",
-  ]
-}
-resource "google_project_iam_binding" "gke_storage_admin" {
-  project  = var.gcp_project
-  role               = "roles/storage.admin"
-   members = [
-    "serviceAccount:${google_service_account.gke.email}",
-  ]
-}
-resource "google_project_iam_binding" "gke_cluster_viewer" {
-  project  = var.gcp_project
-  role               = "roles/container.clusterViewer"
-   members = [
-    "serviceAccount:${google_service_account.gke.email}",
-  ]
-}
+# resource "google_service_account" "gke" {
+#   project      = var.gcp_project
+#   account_id   = "gke-service-account"
+#   display_name = "Service Account for GKE"
+# }
+# resource "google_project_iam_binding" "gke_container_admin" {
+#   project  = var.gcp_project
+#   role               = "roles/container.admin"
+#    members = [
+#     "serviceAccount:${google_service_account.gke.email}",
+#   ]
+# }
+# resource "google_project_iam_binding" "gke_storage_admin" {
+#   project  = var.gcp_project
+#   role               = "roles/storage.admin"
+#    members = [
+#     "serviceAccount:${google_service_account.gke.email}",
+#   ]
+# }
+# resource "google_project_iam_binding" "gke_cluster_viewer" {
+#   project  = var.gcp_project
+#   role               = "roles/container.clusterViewer"
+#    members = [
+#     "serviceAccount:${google_service_account.gke.email}",
+#   ]
+# }
 
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
@@ -47,7 +47,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     machine_type = "e2-medium"
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account = google_service_account.gke.email
+    service_account = var.sa_email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]

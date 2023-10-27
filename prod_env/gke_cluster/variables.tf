@@ -15,3 +15,7 @@ variable "gcp_zone" {
 variable "node_pool_name" {
   description = "node pool name"
 }
+
+variable "sa_email" {
+  description = "service account email"
+}
