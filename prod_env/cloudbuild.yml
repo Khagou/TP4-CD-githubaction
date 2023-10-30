@@ -1,7 +1,7 @@
 steps:
   # build the container image
 - name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest", "."]
+  args: ["build", "-t", "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest", "/docker-app/python/Dockerfile"]
   # push container image
 - name: "gcr.io/cloud-builders/docker"
   args: ["push", "europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest"]
