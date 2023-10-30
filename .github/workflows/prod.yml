@@ -85,7 +85,7 @@ jobs:
 
       # - name: Creation du service
       #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml"
-      - name: Deploy
+      - name: Deployment
         run: |
           ls
           pwd
