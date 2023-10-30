@@ -89,5 +89,7 @@ jobs:
         run: |
           ls
           pwd
+          ls docker-app
+          ls docker-app/python
           gcloud builds submit --region=europe-west1 --project=tp4-cd-400812 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4-tfstate/terraform-env-prod"
           sleep 60
