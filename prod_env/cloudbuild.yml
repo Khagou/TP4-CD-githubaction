@@ -11,5 +11,5 @@ steps:
   - run
   - --filename=./prod_env/deployment.yml
   - --image=europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest
-  - --location=europe-west1-b
+  - --location=europe-west1
   - --cluster=deployment-cluster
