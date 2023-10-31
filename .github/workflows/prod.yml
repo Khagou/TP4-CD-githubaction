@@ -92,5 +92,5 @@ jobs:
           ls docker-app
           ls docker-app/python
           gcloud projects add-iam-policy-binding tp4-cd-400812 --member=serviceAccount:1004562053837@cloudbuild.gserviceaccount.com --role=roles/container.developer
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-400812 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4-tfstate/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-400812 --config ./prod_env/deployment.yml --gcs-log-dir="gs://tp4-tfstate/terraform-env-prod"
           sleep 60

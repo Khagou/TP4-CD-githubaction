@@ -13,7 +13,7 @@ spec:
         app: demo-app
     spec:
       containers:
-        - image: europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest
+        - image: khagu/image-tp3:latest
           name: demo-app
           imagePullPolicy: Always
           ports:
