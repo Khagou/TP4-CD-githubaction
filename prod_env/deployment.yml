@@ -3,10 +3,9 @@ kind: Deployment
 metadata:
   labels:
     app: demo-app
-  name: demo-app
 
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -22,3 +21,16 @@ spec:
   selector:
     matchLabels:
       app: demo-app
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app
+spec:
+  selector:
+    app: demo-app
+  ports:
+  - port: 80
+    targetPort: 5000
+
