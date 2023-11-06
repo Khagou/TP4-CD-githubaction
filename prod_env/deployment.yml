@@ -18,7 +18,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
-              protocol: TCP
   selector:
     matchLabels:
       app: demo-app
@@ -32,6 +31,7 @@ spec:
   selector:
     app: demo-app
   ports:
-  - port: 80
+  - protocole: TCP
+    port: 80
     targetPort: 5000
 
