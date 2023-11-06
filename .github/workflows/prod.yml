@@ -10,46 +10,10 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  # ###### Deploiement terraform ######
-  # ###################################
-  # deploiement-terraform:
-  #   permissions:
-  #     contents: "read"
-  #     id-token: "write"
-  #   runs-on: ${{ vars.IMAGE_OS }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Setup terraform
-  #       uses: hashicorp/setup-terraform@v2
-
-  #     - name: Terraform Init
-  #       run: |
-  #         cd prod_env
-  #         terraform init
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
-  #     - name: Terraform Plan
-  #       run: |
-  #         cd prod_env
-  #         terraform plan -input=false
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
-  #     - name: Terraform Apply
-  #       if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
-  #       run: |
-  #         cd prod_env
-  #         terraform apply -auto-approve -input=false
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
   ###### Deploiement image et service ######
   ##########################################
 
   Deploiement-image-et-service:
-    # needs: [deploiement-terraform]
     permissions:
       contents: "read"
       id-token: "write"
@@ -73,18 +37,6 @@ jobs:
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-b
 
-      # - name: Get instance name
-      #   id: instancename
-      #   run: GKE_INSTANCE=$(gcloud compute instances list | awk '{print $2}' | grep "gke")
-
-      # - name: Copy files
-      #   run: gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction $GKE_INSTANCE:~
-
-      # - name: Deploy image
-      #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/deployment.yml"
-
-      # - name: Creation du service
-      #   run: gcloud compute ssh $GKE_INSTANCE --command="kubectl apply -f ./prod-end/service.yml"
       - name: Deployment
         run: |
           ls

@@ -3,24 +3,24 @@ kind: Deployment
 metadata:
   name: demo-app
   labels:
-    app: demo-app
+    app: myapp
 
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: demo-app
   template:
     metadata:
       labels:
         app: demo-app
     spec:
       containers:
-        - image: khagu/image-tp3:latest
-          name: demo-app
+        - name: demo-app
+          image: europe-west1-docker.pkg.dev/tp4-cd-400812/docker-repo/tp4-cd:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
-  selector:
-    matchLabels:
-      app: demo-app
 
 ---
 apiVersion: v1
