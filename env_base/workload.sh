@@ -10,6 +10,7 @@ gcloud services enable iam.googleapis.com --project=$PROJET
 gcloud services enable containerregistry.googleapis.com --project=$PROJET
 gcloud storage buckets create gs://tp4tfstate --project=$PROJET
 gcloud services enable container.googleapis.com --project=$PROJET
+gcloud services enable cloudbuild.googleapis.com --project=$PROJET
 
 terraform init
 
