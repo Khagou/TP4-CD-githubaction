@@ -49,7 +49,7 @@ jobs:
   ##########################################
 
   Deploiement-image-et-service:
-    # needs: [deploiement-terraform]
+    needs: [deploiement-terraform]
     permissions:
       contents: "read"
       id-token: "write"
