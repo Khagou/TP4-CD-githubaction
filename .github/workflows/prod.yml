@@ -10,40 +10,40 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  # ###### Deploiement terraform ######
-  # ###################################
-  # deploiement-terraform:
-  #   permissions:
-  #     contents: "read"
-  #     id-token: "write"
-  #   runs-on: ${{ vars.IMAGE_OS }}
-  #   steps:
-  #     - uses: actions/checkout@v3
+  ###### Deploiement terraform ######
+  ###################################
+  deploiement-terraform:
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Setup terraform
-  #       uses: hashicorp/setup-terraform@v2
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
 
-  #     - name: Terraform Init
-  #       run: |
-  #         cd prod_env
-  #         terraform init
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      - name: Terraform Init
+        run: |
+          cd prod_env
+          terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-  #     - name: Terraform Plan
-  #       run: |
-  #         cd prod_env
-  #         terraform plan -input=false
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      - name: Terraform Plan
+        run: |
+          cd prod_env
+          terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-  #     - name: Terraform Apply
-  #       if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
-  #       run: |
-  #         cd prod_env
-  #         terraform apply -auto-approve -input=false
-  #       env:
-  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
+        run: |
+          cd prod_env
+          terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
   ###### Deploiement image et service ######
   ##########################################
@@ -92,4 +92,4 @@ jobs:
           ls docker-app
           ls docker-app/python
           gcloud projects add-iam-policy-binding tp4-cd-403915 --member=serviceAccount:1004562053837@cloudbuild.gserviceaccount.com --role=roles/container.developer
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4-tfstate/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
