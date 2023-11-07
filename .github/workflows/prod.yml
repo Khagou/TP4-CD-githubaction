@@ -93,6 +93,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.PROJECT_ID}}
+          install_components: "gke-gcloud-auth-plugin"
 
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-b
@@ -128,8 +129,13 @@ jobs:
       #   with:
       #     args: apply -f ./prod_env/deployment.yml -n prod
 
-      - name: Deployment
+      - name: Deploy to GKE
         run: |
-          ls
-          pwd
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
+          gcloud container clusters get-credentials deployment-cluster --region europe-west1
+          kubectl apply -f deployment.yml
+
+      # - name: Deployment
+      #   run: |
+      #     ls
+      #     pwd
+      #     gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
