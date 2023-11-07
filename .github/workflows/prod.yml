@@ -102,4 +102,4 @@ jobs:
         run: |
           ls
           pwd
-          kubectl apply -f ./prod_env/deployment.yml
+          kubectl create deployment demo-app --image=europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:1
