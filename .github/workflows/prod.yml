@@ -102,7 +102,7 @@ jobs:
         uses: google-github-actions/get-gke-credentials@v1
         with:
           cluster_name: "deployment-cluster"
-          location: "europe-west1-b"
+          # location: "europe-west1-b"
 
       # Set up kustomize
       - name: Set up Kustomize
