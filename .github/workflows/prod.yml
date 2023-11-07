@@ -112,6 +112,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
+          ls
           ./kustomize edit set image europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:latest
           ./kustomize build . | kubectl apply -f -
           kubectl rollout status deployment/demo-app
