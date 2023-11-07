@@ -104,4 +104,4 @@ jobs:
           pwd
           ls docker-app
           ls docker-app/python
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"

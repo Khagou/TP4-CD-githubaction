@@ -3,6 +3,5 @@ steps:
   args:
   - run
   - --filename=./prod_env/deployment.yml
-  - --image=europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:1
   - --location=europe-west1
   - --cluster=deployment-cluster

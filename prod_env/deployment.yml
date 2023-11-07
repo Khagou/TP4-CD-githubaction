@@ -18,7 +18,6 @@ spec:
       containers:
         - name: demo-app
           image: europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:1
-          # imagePullPolicy: Always
           ports:
             - containerPort: 5000
 
