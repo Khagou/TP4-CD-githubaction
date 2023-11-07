@@ -132,7 +132,7 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters get-credentials deployment-cluster --region europe-west1
-          kubectl apply -f deployment.yml
+          kubectl apply -f ./prod_env/deployment.yml
 
       # - name: Deployment
       #   run: |
