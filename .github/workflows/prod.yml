@@ -126,7 +126,7 @@ jobs:
           CLUSTER_NAME: deployment-cluster
           ZONE_NAME: europe-west1
         with:
-          args: apply -f packaging/k8s/manifests/ -n prod
+          args: apply -f ./prod_env/deployment.yml -n prod
 
       # - name: Deployment
       #   run: |
