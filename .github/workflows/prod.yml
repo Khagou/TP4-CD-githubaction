@@ -100,8 +100,8 @@ jobs:
       - name: Get GKE
         uses: google-github-actions/get-gke-credentials@v1
         with:
-          cluster_name: "deployment-cluster"
-          location: "europe-west1"
+          cluster_name: deployment-cluster
+          location: europe-west1
 
       # Set up kustomize
       # - name: Set up Kustomize
@@ -118,8 +118,18 @@ jobs:
       #     kubectl rollout status deployment/demo-app
       #     kubectl get services -o wide
 
-      - name: Deployment
-        run: |
-          ls
-          pwd
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
+      - name: kubectl - Google Cloud GKE cluster.
+        uses: ameydev/gke-kubectl-action@master
+        env:
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          CLUSTER_NAME: deployment-cluster
+          ZONE_NAME: europe-west1
+        with:
+          args: apply -f packaging/k8s/manifests/ -n prod
+
+      # - name: Deployment
+      #   run: |
+      #     ls
+      #     pwd
+      #     gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
