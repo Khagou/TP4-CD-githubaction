@@ -92,7 +92,6 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          version: ">= 363.0.0"
           project_id: ${{ secrets.PROJECT_ID}}
 
       - name: Configure gcloud
@@ -102,7 +101,7 @@ jobs:
         uses: google-github-actions/get-gke-credentials@v1
         with:
           cluster_name: "deployment-cluster"
-          # location: "europe-west1-b"
+          location: "europe-west1"
 
       # Set up kustomize
       - name: Set up Kustomize
