@@ -118,15 +118,15 @@ jobs:
       #     kubectl rollout status deployment/demo-app
       #     kubectl get services -o wide
 
-      - name: kubectl - Google Cloud GKE cluster.
-        uses: ameydev/gke-kubectl-action@master
-        env:
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          CLUSTER_NAME: deployment-cluster
-          ZONE_NAME: europe-west1
-        with:
-          args: apply -f ./prod_env/deployment.yml -n prod
+      # - name: kubectl - Google Cloud GKE cluster.
+      #   uses: ameydev/gke-kubectl-action@master
+      #   env:
+      #     PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      #     APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      #     CLUSTER_NAME: deployment-cluster
+      #     ZONE_NAME: europe-west1
+      #   with:
+      #     args: apply -f ./prod_env/deployment.yml -n prod
 
       # - name: Deployment
       #   run: |
