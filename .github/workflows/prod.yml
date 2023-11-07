@@ -103,7 +103,6 @@ jobs:
         with:
           cluster_name: "deployment-cluster"
           location: "europe-west1-b"
-          credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       # Set up kustomize
       - name: Set up Kustomize
