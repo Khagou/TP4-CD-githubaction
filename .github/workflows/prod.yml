@@ -1,0 +1,48 @@
+name: Pipeline prod-env
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  # Use docker.io for Docker Hub if empty
+  SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
+
+jobs:
+  ##### Deploiement image et service ######
+  #########################################
+
+  Deploiement-image-et-service:
+    # needs: [push-docker-image-to-GAR]
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Auth to gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.PROJECT_ID}}
+          install_components: "gke-gcloud-auth-plugin"
+
+      - name: Configure gcloud
+        run: gcloud config set compute/zone europe-west1-b
+
+      - name: Get GKE
+        uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: deployment-cluster
+          location: europe-west1
+
+      - name: Deploy to GKE
+        run: |
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"

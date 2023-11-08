@@ -2,37 +2,55 @@ version: "3"
 
 services:
   pylint:
-    build: "pylint/"
+    build:
+      context: ./pylint/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
+    tty: true
+    stdin_open: true
   unittest:
-    build: "unittest/"
+    build:
+      context: ./unittest/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
+    tty: true
+    stdin_open: true
   radon-cc:
-    build: "radon-cc/"
+    build:
+      context: ./radon-cc/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
+    tty: true
+    stdin_open: true
   radon-raw:
-    build: "radon-raw/"
+    build:
+      context: ./radon-raw/
+      dockerfile: ./Dockerfile
     volumes:
       - type: bind
         source: ../app
         target: /app/
+    tty: true
+    stdin_open: true
   app:
     build:
-      context: C:\Users\Khagu\OneDrive\Documents\cours\DevOps\TP\TP3\app_python\python-api-handle-it
-      dockerfile: "docker-app/python/Dockerfile"
+      context: /home/runner/TP4-CD-githubaction/
+      dockerfile: docker-app/python/Dockerfile
     ports:
       - 5000:5000
   robot:
-    build: "robot/"
+    build:
+      context: ./robot/
+      dockerfile: ./Dockerfile
     environment:
       URL: app
       PORT: 5000
@@ -42,3 +60,5 @@ services:
       - type: bind
         source: ../app
         target: /app/
+    tty: true
+    stdin_open: true

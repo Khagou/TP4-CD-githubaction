@@ -1,0 +1,152 @@
+name: Pipeline test-env
+
+on:
+  pull_request:
+    branches:
+      - test
+
+env:
+  # Use docker.io for Docker Hub if empty
+  SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
+
+jobs:
+  # ###### Check docker image ######
+  # ################################
+  # check-docker-image:
+  #   runs-on: ${{ vars.IMAGE_OS }}
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKER_USER }}
+  #         password: ${{ secrets.DOCKER_TOKEN }}
+
+  #     - name: Extract Docker metadata
+  #       id: meta
+  #       uses: docker/metadata-action@v4.4.0
+  #       with:
+  #         images: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
+  #         labels: |
+  #           org.opencontainers.image.revision=${{ env.SHA }}
+  #         tags: |
+  #           type=edge,branch=$repo.default_branch
+  #           type=semver,pattern=v{{version}}
+  #           type=sha,prefix=,suffix=,format=short
+
+  #     - name: Check image
+  #       uses: docker/scout-action@v0.18.1
+  #       with:
+  #         command: cves
+  #         image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
+  #         exit-code: true
+
+  ###### Deploiement terraform ######
+  ###################################
+  deploiement-terraform:
+    # needs: [push-docker-image-to-GAR]
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: |
+          cd test_env
+          terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Terraform Plan
+        run: |
+          cd test_env
+          terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/test' && github.event_name == 'push'
+        run: |
+          cd test_env
+          terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+  ###### Installation Docker et Compose ######
+  ############################################
+
+  Installation-Docker-et-Compose:
+    needs: [deploiement-terraform]
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+    # outputs:
+    #   output1: ${{ steps.filecheck.outputs.test }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Auth to gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: ">= 363.0.0"
+          project_id: ${{ secrets.PROJECT_ID}}
+
+      - name: Configure gcloud
+        run: gcloud config set compute/zone europe-west1-c
+
+      - name: Check files
+        id: filecheck
+        run: |
+          gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if [ -d "TP4-CD-githubaction" ]; then echo 'dossier déjà présent, suppression des anciens fichier puis remplacement par les nouveaux' && sudo rm -rf TP4-CD-githubaction; fi"
+
+      - name: Copy files
+        run: |
+          gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${{ vars.TEST_INSTANCE }}:~
+
+      - name: Install Docker and compose then compose up
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if [ ! command -v docker &> /dev/null ]; then sudo apt-get update && sudo apt-get -y install gnupg && sudo apt-get -y install ca-certificates && sudo apt-get -y install lsb-release && sudo apt-get -y install curl && sudo install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && sudo chmod a+r /etc/apt/keyrings/docker.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && sudo apt-get -y update && sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; fi"
+
+      - name: Check files copy
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd"
+
+  ###### Deploiement docker compose up ######
+  ###########################################
+  Deploiement-docker-compose:
+    needs: [Installation-Docker-et-Compose]
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ${{ vars.IMAGE_OS }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Auth to gcloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: ">= 363.0.0"
+          project_id: ${{ secrets.PROJECT_ID}}
+
+      - name: Configure gcloud
+        run: gcloud config set compute/zone europe-west1-c
+
+      - name: docker compose up
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && sudo usermod -aG docker $USER && newgrp docker && echo 'launch docker compose up' && sudo docker compose up -d"
