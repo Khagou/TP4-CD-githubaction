@@ -104,39 +104,14 @@ jobs:
           cluster_name: deployment-cluster
           location: europe-west1
 
-      # Set up kustomize
-      # - name: Set up Kustomize
-      #   run: |-
-      #     curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-      #     chmod u+x ./kustomize
-
-      # # Deploy the Docker image to the GKE cluster
-      # - name: Deploy
-      #   run: |-
-      #     ls
-      #     ./kustomize edit set image europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:latest
-      #     ./kustomize build . | kubectl apply -f -
-      #     kubectl rollout status deployment/demo-app
-      #     kubectl get services -o wide
-
-      # - name: kubectl - Google Cloud GKE cluster.
-      #   uses: ameydev/gke-kubectl-action@master
-      #   env:
-      #     PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      #     APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-      #     CLUSTER_NAME: deployment-cluster
-      #     ZONE_NAME: europe-west1
-      #   with:
-      #     args: apply -f ./prod_env/deployment.yml -n prod
-
-      - name: Deploy to GKE
-        run: |
-          gcloud auth configure-docker europe-west1-docker.pkg.dev
-          gcloud container clusters get-credentials deployment-cluster --region europe-west1
-          kubectl apply -f ./prod_env/deployment.yml
-
-      # - name: Deployment
+      # - name: Deploy to GKE
       #   run: |
-      #     ls
-      #     pwd
-      #     gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
+      #     gcloud auth configure-docker europe-west1-docker.pkg.dev
+      #     gcloud container clusters get-credentials deployment-cluster --region europe-west1
+      #     kubectl apply -f ./prod_env/deployment.yml
+
+      - name: Deployment
+        run: |
+          ls
+          pwd
+          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
