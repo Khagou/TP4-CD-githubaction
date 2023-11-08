@@ -3,6 +3,6 @@ steps:
   args:
   - run
   - --filename=./prod_env/deployment.yml
-  - --location=europe-west1
-  - --cluster=deployment-cluster
+  - --location=europe-west1 
+  - --cluster=deployment-cluster 
 timeout: 660s
