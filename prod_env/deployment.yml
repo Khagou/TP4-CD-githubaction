@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: "europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd@sha256:8557101636cc8ae81001201354206bc28e7c4bf608760f234258648ab0e2a015"
+          image: "europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:1"
           ports:
             - containerPort: 5000
 
@@ -26,7 +26,7 @@ spec:
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "nginx-1-hpa-u4gv"
+  name: "demo-app-hpa"
   namespace: "default"
   labels:
     app: "demo-app"
