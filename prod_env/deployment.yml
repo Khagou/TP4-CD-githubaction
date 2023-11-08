@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: "khagu/image-tp3:1"
+          image: "europe-west1-docker.pkg.dev/tp4-cd-403915/docker-repo/tp4-cd:1"
           ports:
             - containerPort: 5000
 

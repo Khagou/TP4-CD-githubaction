@@ -1,50 +1,53 @@
 name: Pipeline prod-env
 
 on:
-  push:
+  pull_request:
     branches:
-      - prod
+      - main
 
 env:
   # Use docker.io for Docker Hub if empty
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  # ###### Check docker image ######
-  # ################################
-  # check-docker-image:
-  #   runs-on: ${{ vars.IMAGE_OS }}
-  #   steps:
-  #     - uses: actions/checkout@v3
+  ###### Check docker image ######
+  ################################
+  check-docker-image:
+    runs-on: ${{ vars.IMAGE_OS }}
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v2
-  #       with:
-  #         username: ${{ secrets.DOCKER_USER }}
-  #         password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
-  #     - name: Extract Docker metadata
-  #       id: meta
-  #       uses: docker/metadata-action@v4.4.0
-  #       with:
-  #         images: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
-  #         labels: |
-  #           org.opencontainers.image.revision=${{ env.SHA }}
-  #         tags: |
-  #           type=edge,branch=$repo.default_branch
-  #           type=semver,pattern=v{{version}}
-  #           type=sha,prefix=,suffix=,format=short
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}
+          labels: |
+            org.opencontainers.image.revision=${{ env.SHA }}
+          tags: |
+            type=edge,branch=$repo.default_branch
+            type=semver,pattern=v{{version}}
+            type=sha,prefix=,suffix=,format=short
 
-  #     - name: Check image
-  #       uses: docker/scout-action@v0.18.1
-  #       with:
-  #         command: cves
-  #         image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
-  #         exit-code: true
-  #         # token: ${{ secrets.DOCKER_TOKEN }}
+      - name: Check image
+        uses: docker/scout-action@v0.18.1
+        with:
+          command: cves
+          image: ${{ secrets.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ vars.DOCKER_IMAGE_VERSION }}
+          exit-code: true
+          # token: ${{ secrets.DOCKER_TOKEN }}
 
   # ##### Push img to GAR ######
   # ############################
+  # ## Je l'ai laissé pour que tu vois mais je n'arrive pas à déployer sur GKE à partir du GAR, ##
+  # ## probleme Oauth ou un truc du genre, je ne sais pas je ne sais plus... lol ##
+
   # push-docker-image-to-GAR:
   #   needs: [check-docker-image]
   #   runs-on: ${{ vars.IMAGE_OS }}
@@ -104,14 +107,6 @@ jobs:
           cluster_name: deployment-cluster
           location: europe-west1
 
-      # - name: Deploy to GKE
-      #   run: |
-      #     gcloud auth configure-docker europe-west1-docker.pkg.dev
-      #     gcloud container clusters get-credentials deployment-cluster --region europe-west1
-      #     kubectl apply -f ./prod_env/deployment.yml
-
-      - name: Deployment
+      - name: Deploy to GKE
         run: |
-          ls
-          pwd
           gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"

@@ -1,7 +1,7 @@
 name: Pipeline test-env
 
 on:
-  push:
+  pull_request:
     branches:
       - test
 
@@ -88,8 +88,8 @@ jobs:
       contents: "read"
       id-token: "write"
     runs-on: ${{ vars.IMAGE_OS }}
-    outputs:
-      output1: ${{ steps.filecheck.outputs.test }}
+    # outputs:
+    #   output1: ${{ steps.filecheck.outputs.test }}
 
     steps:
       - uses: actions/checkout@v3
