@@ -10,8 +10,8 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  # ###### Check docker image ######
-  # ################################
+  ###### Check docker image ######
+  ################################
   # check-docker-image:
   #   runs-on: ${{ vars.IMAGE_OS }}
   #   steps:
@@ -149,4 +149,4 @@ jobs:
         run: gcloud config set compute/zone europe-west1-c
 
       - name: docker compose up
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && sudo usermod -aG docker $USER && newgrp docker && echo 'launch docker compose up' && sudo docker compose up -d"
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && newgrp docker && sudo usermod -aG docker $USER && echo 'launch docker compose up' && sudo docker compose up -d"
