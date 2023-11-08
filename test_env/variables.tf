@@ -1,6 +1,6 @@
 variable "gcp_project" {
   type        = string
-  default     = "tp4-cd-400812" # Change me
+  default     = "tp4-cd-403915" # Change me
   description = "The GCP project to deploy the runner into."
 }
 variable "gcp_zone" {
@@ -31,22 +31,12 @@ variable "machine" {
 
 variable "sa_email" {
   description = "Service Account email"
-  default = "terraform@tp4-cd-400812.iam.gserviceaccount.com"
+  default = "terraform@tp4-cd-403915.iam.gserviceaccount.com"
 }
 
 variable "subnetwork" {
   description = "Subnetwork name"
   default = "my-subnetwork"
-}
-
-variable "private_key" {
-  description = "SA private key"
-  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/tf_key"
-}
-
-variable "pub_key" {
-  description = "SA pub key"
-  default = "/home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction/test_env/ssh_keys"
 }
 
 variable "user" {
