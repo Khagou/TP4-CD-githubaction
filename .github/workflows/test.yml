@@ -117,7 +117,7 @@ jobs:
         run: |
           gcloud compute scp --recurse /home/runner/work/TP4-CD-githubaction/TP4-CD-githubaction ${{ vars.TEST_INSTANCE }}:~
 
-      - name: Install Docker and compose then compose up
+      - name: Install Docker and compose
         run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if [ ! command -v docker &> /dev/null ]; then sudo apt-get update && sudo apt-get -y install gnupg && sudo apt-get -y install ca-certificates && sudo apt-get -y install lsb-release && sudo apt-get -y install curl && sudo install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && sudo chmod a+r /etc/apt/keyrings/docker.gpg && echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && sudo apt-get -y update && sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; fi"
 
       - name: Check files copy
@@ -149,7 +149,7 @@ jobs:
         run: gcloud config set compute/zone europe-west1-c
 
       - name: add user to docker group
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="sudo groupadd docker && sudo usermod -aG docker $USER && exit"
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if grep -q '^docker:' /etc/group; then echo 'Le groupe docker existe déjà.'; else sudo groupadd docker && sudo usermod -aG docker $USER && echo 'Le groupe docker a été créé, et vous avez été ajouté au groupe.'; fi"
 
       - name: docker compose up
         run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && echo 'launch docker compose up' && sudo docker compose up -d"
