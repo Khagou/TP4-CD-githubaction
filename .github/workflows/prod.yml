@@ -131,6 +131,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
+          gcloud auth configure-docker europe-west1-docker.pkg.dev
           gcloud container clusters get-credentials deployment-cluster --region europe-west1
           kubectl apply -f ./prod_env/deployment.yml
 
