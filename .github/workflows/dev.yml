@@ -45,36 +45,36 @@ jobs:
 
   ##### Push img to GAR ######
   ############################
-  push-docker-image-to-GAR:
-    # needs: [check-docker-image]
-    runs-on: ${{ vars.IMAGE_OS }}
-    permissions:
-      contents: "read"
-      id-token: "write"
+  # push-docker-image-to-GAR:
+  #   # needs: [check-docker-image]
+  #   runs-on: ${{ vars.IMAGE_OS }}
+  #   permissions:
+  #     contents: "read"
+  #     id-token: "write"
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Auth to gcloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS}}
+  #     - name: Auth to gcloud
+  #       uses: google-github-actions/auth@v1
+  #       with:
+  #         credentials_json: ${{ secrets.GOOGLE_CREDENTIALS}}
 
-      - name: "Build and push"
-        uses: RafikFarhad/push-to-gcr-github-action@v5-beta
-        with:
-          # gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
-          registry: europe-west1-docker.pkg.dev
-          project_id: ${{ vars.GCP_PROJECT }}/docker-repo
-          image_name: tp4-cd
-          image_tag: latest
-          dockerfile: ./docker-app/python/Dockerfile
-          context: ./
+  #     - name: "Build and push"
+  #       uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+  #       with:
+  #         # gcloud_service_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         registry: europe-west1-docker.pkg.dev
+  #         project_id: ${{ vars.GCP_PROJECT }}/docker-repo
+  #         image_name: tp4-cd
+  #         image_tag: latest
+  #         dockerfile: ./docker-app/python/Dockerfile
+  #         context: ./
 
   ###### Deploiement terraform ######
   ###################################
   deploiement-terraform:
-    needs: [push-docker-image-to-GAR]
+    # needs: [push-docker-image-to-GAR]
     permissions:
       contents: "read"
       id-token: "write"
