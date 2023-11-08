@@ -10,8 +10,8 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
 jobs:
-  # ###### Check docker image ######
-  # ################################
+  ###### Check docker image ######
+  ################################
   # check-docker-image:
   #   runs-on: ${{ vars.IMAGE_OS }}
   #   steps:
