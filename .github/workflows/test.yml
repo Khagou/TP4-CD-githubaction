@@ -148,5 +148,8 @@ jobs:
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-c
 
+      - name: add user to docker group
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="sudo usermod -aG docker $USER && exit"
+
       - name: docker compose up
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && newgrp docker && sudo usermod -aG docker $USER && echo 'launch docker compose up' && sudo docker compose up -d"
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && newgrp docker && echo 'launch docker compose up' && sudo docker compose up -d"
