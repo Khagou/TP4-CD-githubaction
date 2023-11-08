@@ -9,6 +9,9 @@ env:
   # Use docker.io for Docker Hub if empty
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
 
+permissions:
+  pull-requests: write
+
 jobs:
   ###### Check docker image ######
   ################################
