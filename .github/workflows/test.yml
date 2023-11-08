@@ -152,4 +152,4 @@ jobs:
         run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="if grep -q '^docker:' /etc/group; then echo 'Le groupe docker existe déjà.'; else sudo groupadd docker && sudo usermod -aG docker $USER && echo 'Le groupe docker a été créé, et vous avez été ajouté au groupe.'; fi"
 
       - name: docker compose up
-        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="ls && pwd && cd TP4-CD-githubaction && cd docker-test && ls && echo 'launch docker compose up' && sudo docker compose up -d"
+        run: gcloud compute ssh ${{ vars.TEST_INSTANCE }} --command="cd TP4-CD-githubaction && cd docker-test && echo 'launch docker compose up' && docker compose up -d"
