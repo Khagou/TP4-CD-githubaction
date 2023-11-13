@@ -1,5 +1,4 @@
 # service_account / service_account.tf
-
 resource "google_service_account" "terraform" {
   project      = var.gcp_project
   account_id   = "terraform"
