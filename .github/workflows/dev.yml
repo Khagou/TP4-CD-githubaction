@@ -58,7 +58,7 @@ jobs:
         id: "auth"
         uses: "google-github-actions/auth@v1"
         with:
-          service_account: ${{ secrets.WORKLOAD_SERVICE_ACCOUNT }}
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
       - name: "Build and push"
         uses: RafikFarhad/push-to-gcr-github-action@v5-beta
