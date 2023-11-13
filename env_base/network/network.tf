@@ -1,5 +1,4 @@
 # network/network.tf
-
 resource "google_compute_network" "my_network" {
   name                    = "my-network"
   auto_create_subnetworks = false

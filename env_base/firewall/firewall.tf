@@ -1,5 +1,4 @@
 # firewall/firewall.tf
-
 resource "google_compute_firewall" "allow_internal_traffic" {
   name    = "allow-internal-traffic"
   network = var.network_self_link
