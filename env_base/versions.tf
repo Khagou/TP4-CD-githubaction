@@ -1,3 +1,5 @@
+# service_account / version.tf
+
 terraform {
   required_version = ">= 0.13"
   backend "gcs" {
