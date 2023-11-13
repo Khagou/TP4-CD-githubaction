@@ -12,11 +12,3 @@ resource "google_project_iam_binding" "terraform" {
     "serviceAccount:${google_service_account.terraform.email}",
   ]
 }
-resource "google_project_iam_binding" "terraform2" {
-  project  = var.gcp_project
-  role               = "roles/iam.securityAdmin"
-   members = [
-    "serviceAccount:${google_service_account.terraform.email}",
-  ]
-}
-
