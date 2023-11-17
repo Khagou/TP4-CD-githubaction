@@ -1,21 +1,13 @@
-# Application exemple en Python
+# TP4 create a CD
 
-
-
-## Doc API - Swagger 
-https://app.swaggerhub.com/apis/vanessakovalsky/IT-Management/1.0.0#/
-
-## WebHook Relay 
-https://webhookrelay.com/blog/2017/11/23/github-jenkins-guide
-
-## Build et lancement de l'image docker 
+## Build et lancement de l'image docker
 
 ```sh
 docker build -t my-image-python .
 docker run -it --rm --name my-app my-image-python
 ```
 
-## Envoi de l'image Docker 
+## Envoi de l'image Docker
 
 ```sh
 
@@ -24,13 +16,16 @@ docker run -it --rm --name my-app my-image-python
 ```
 
 ## Execution des tests unitaires :
+
 ```
-python -m unittest test/unit/test.py 
+python -m unittest test/unit/test.py
 ```
 
-## Execution des tests systèmes : 
-* Installer les packages pythons robotframework et robotframework-requests
-* Lancer la commande 
+## Execution des tests systèmes :
+
+- Installer les packages pythons robotframework et robotframework-requests
+- Lancer la commande
+
 ```
 robot test/system/machine.robot
 ```
@@ -43,9 +38,10 @@ kubectl apply -f manifest-k8s
 
 ## Utiliser ansible pour créer le cluster K8s
 
-* Télécharger les rôles
+- Télécharger les rôles
+
 ```sh
 ansible-galaxy install -r requirements.yml -p ./roles
 ```
 
- # Demo Github Action
+# Demo Github Action
