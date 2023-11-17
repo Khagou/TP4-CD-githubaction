@@ -31,7 +31,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.PROJECT_ID}}
+          project_id: ${{ vars.GCP_PROJECT }}
           install_components: "gke-gcloud-auth-plugin"
 
       - name: Configure gcloud
@@ -45,4 +45,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4tfstate/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=$PROJECT_ID --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://$BUCKET/terraform-env-prod"
+        env:
+          PROJECT_ID: ${{ vars.GCP_PROJECT }}
+          BUCKET: ${{ vars.BUCKET }}
