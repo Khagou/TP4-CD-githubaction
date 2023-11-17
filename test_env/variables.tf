@@ -1,6 +1,6 @@
 variable "gcp_project" {
   type        = string
-  default     = "tp4-cd-403915" # Change me
+  default     = "tp4-test-405014" # Change me
   description = "The GCP project to deploy the runner into."
 }
 variable "gcp_zone" {
@@ -31,7 +31,7 @@ variable "machine" {
 
 variable "sa_email" {
   description = "Service Account email"
-  default = "terraform@tp4-cd-403915.iam.gserviceaccount.com"
+  default = "terraform@tp4-test-405014.iam.gserviceaccount.com"
 }
 
 variable "subnetwork" {

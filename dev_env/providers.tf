@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "tp4tfstate"
+    bucket = "tp4testbucket"
     prefix = "terraform-env-dev/state"
   }
 }

@@ -35,6 +35,6 @@ variable "sa_email" {
 
 variable "subnetwork" {
   description = "Subnetwork name"
-  default = "my-subnetwork"
+  default = "my-subnetwork" # Change me if you need
 }
 
