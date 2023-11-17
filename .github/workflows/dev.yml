@@ -66,7 +66,7 @@ jobs:
           registry: europe-west1-docker.pkg.dev
           project_id: ${{ vars.GCP_PROJECT }}/docker-repo
           image_name: tp4-cd
-          image_tag: 1
+          image_tag: latest
           dockerfile: ./docker-app/python/Dockerfile
           context: ./
 
