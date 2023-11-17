@@ -45,4 +45,4 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          gcloud builds submit --region=europe-west1 --project=tp4-cd-403915 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4testbucket/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=tp4-test-405014 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4testbucket/terraform-env-prod"
