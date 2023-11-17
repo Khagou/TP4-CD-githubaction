@@ -45,4 +45,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          gcloud builds submit --region=europe-west1 --project=tp4-test-405014 --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://tp4testbucket/terraform-env-prod"
+          gcloud builds submit --region=europe-west1 --project=$PROJECT_ID --config ./prod_env/cloudbuild.yml --gcs-log-dir="gs://$BUCKET/terraform-env-prod"
+        env:
+          PROJECT_ID: ${{ vars.GCP_PROJECT }}
+          BUCKET: ${{ vars.BUCKET }}
