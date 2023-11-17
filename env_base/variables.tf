@@ -1,7 +1,7 @@
 # service_account / variables.tf
 variable "gcp_project" {
   type        = string
-  default     = "tp4-cd-403915" # Change me
+  default     = "tp4-test-405014" # Change me
   description = "The GCP project to deploy the runner into."
 }
 
