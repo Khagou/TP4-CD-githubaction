@@ -31,7 +31,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.PROJECT_ID}}
+          project_id: ${{ vars.GCP_PROJECT }}
           install_components: "gke-gcloud-auth-plugin"
 
       - name: Configure gcloud
