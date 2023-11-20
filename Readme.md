@@ -28,35 +28,52 @@ Disposer de git sur votre machine, d'un compte Github, d'un compte de facturatio
 
 ## Presentation du workflow
 
-Si on regarde le workflow on constate que le workflow:
+Si on regarde le workflow dev.yml on constate que le workflow:
 
-1. Lance le test avec pylint
-2. Lance les tests unittest
-3. Lance les tests avec robotframework
-4. Il lance ensuite le test radon raw
-5. Pour finir avec les tests il lance le test radon cc
-6. Une fois les tests termine et valide lancement du build et du push de l'image docker sur le hub docker.
+1. Check l'image sur le hub docker en utilisant docker scout
+2. Push l'image sur Google Artifact Registry
+3. Deploie l'environnement avec terraform
 
+--------------------------------------------------------------
+
+Si on regarde le workflow test.yml on constate que le workflow:
+
+1. Procède au deploiement terraform
+2. Se connect en SSH a la VM deployé afin d'y installer docker et docker compose
+3. Realise le deploiement docker compose
+
+--------------------------------------------------------------
+
+Si on regarde le workflow prod.yml on constate que le workflow:
+
+1. Realise le deploiement sur Google Kubernetes Engine
+
+   
 ## Configuration des parametres de pipeline
 
 1- Cloner l'ensemble du repot sur votre machine
 
 ```
-git clone https://github.com/Khagou/TP3-CI-github-actions.git
+git clone https://github.com/Khagou/TP4-CD-githubaction.git
 ```
 
 2- Creer un repot github et suivre les instructions fournis par github
 
-3- Creer un repot sur le hubdocker
+3- Creer un projet GCP
 
-4- Toujours sur le hubdocker cliquer sur le pseudo en haut a droite puis **_"Account settings"_** dans le bandeau de gauche **_"Security"_** puis **_"New acces token"_**, finallement copier le token qui servira a la prochaine etape
+4- Dans le dossier **env_base**, modifier les variables PORJET et BUCKET du script shell ainsi que la variable gcp_project du fichier variable et le nom du bucket du fichier versions
 
-5- Accèder au repot github puis au parametres de celui-ci, dans le bandeau de gauche dans la section securite cliquer sur "secrets and variables" puis Actions. Une page avec 2 onglets ("Secrets" et "Variables") s'ouvre.
+5- Importer le dossier **env_base** dans cloud shell, puis placez vous dans le dossier et lancez le script.
+
+6- Une fois le script terminé, récupérez l'adresse email du commpte de service cree et creez lui une cle de compte de service (si vous ne l'avez pas modifie le compte de service devrait s'appeler terraform@<project_id>.iam.gserviceaccount.com), puis accordez le role "administrateur artifact registry" au compte de service compute engine, le nom doit ressembler a quelque chose comme "<project-number>-compute@developer.gserviceaccount.com".
+
+7- Accèder au repot github puis au parametres de celui-ci, dans le bandeau de gauche dans la section securite cliquer sur "secrets and variables" puis Actions. Une page avec 2 onglets ("Secrets" et "Variables") s'ouvre.
 
 - **Creation des Secrets**:
 
-  - Dans l'onglet **_"secrets"_** cliquer sur **_New repository secret_** nommer le premier secret `DOCKER_TOKEN`, puis coller votre token cree juste avant sur le hub docker dans la section "Secret\*"
+  - Dans l'onglet **_"secrets"_** cliquer sur **_New repository secret_** nommer le premier secret `DOCKER_TOKEN`, puis coller votre token cree juste avant sur le hub docker dans la section "Secret\*" (si besoin voir point 4 https://github.com/Khagou/TP3-CI-github-actions/blob/main/Readme.md#configuration-des-parametres-de-pipeline)
   - Recreer un nouveau secret et le nommer `DOCKER_USER`, entrer son pseudo hub docker en secret
+  - Creer ensuite un secret `GOOGLE_CREDENTIALS`, et copier le contenu du fichier telecharge lors de la creation de la cle du compte de service
 
 - **Creation des Variables**:
   - Acceder a l'onglet **_"variable"_** puis cliquer sur **_New repository variable_**, nommer cette premiere variable `DOCKER_REPO` et entrer en valeur le nom du repot creer sur le hub docker lors de l'etape 3
