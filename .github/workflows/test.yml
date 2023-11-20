@@ -107,7 +107,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: ">= 363.0.0"
-          project_id: ${{ secrets.PROJECT_ID}}
+          project_id: ${{ vars.GCP_PROJECT }}
 
       - name: Configure gcloud
         run: gcloud config set compute/zone europe-west1-c
