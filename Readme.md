@@ -77,30 +77,25 @@ git clone https://github.com/Khagou/TP4-CD-githubaction.git
 
 - **Creation des Variables**:
   - Acceder a l'onglet **_"variable"_** puis cliquer sur **_New repository variable_**, nommer cette premiere variable `DOCKER_REPO` et entrer en valeur le nom du repot creer sur le hub docker lors de l'etape 3
-  - Creer une 2eme variable `IMAGE_FILE` laquelle contiendra le chemin du dockerfile de l'app si vous n'avez rien modifier entrez en valeur `docker-app/python/Dockerfile` si non entrez le nouveau chemin
-  - Creer une 3eme variable `IMAGE_OS` et entrez la valeur `ubuntu-latest` ou celle de votre choix, a savoir que le workflow est parametre pour du Debian, certaines modifications peuvent etre necessaire pour un autre OS.
-  - Creer ensuite une 4eme variable `ROBOT_FILE_NAME` et enregistrez y en valeur le nom du fichier robotframework, si vous ne l'avez pas modifie `machine.robot`
-  - Puis creer une 5eme variable `ROBOT_FILE_WAY` qui contiendra le chemin du fichier robotframework, si non modifie `./app/test/system`
-  - Creer une 6eme variable `DOCKER_IMAGE_VERSION` qui contiendra la version de l'image de votre application
-  - Pour finir la 7eme variable s'appellera `UNITTEST_FILE` et contiendra le chemin du fichier unittest, si non modifie `test/unit/test.py`
+  - Creer une variable `IMAGE_FILE` laquelle contiendra le chemin du dockerfile de l'app si vous n'avez rien modifier entrez en valeur `docker-app/python/Dockerfile` si non entrez le nouveau chemin
+  - Creer une variable `IMAGE_OS` et entrez la valeur `ubuntu-latest` ou celle de votre choix, a savoir que le workflow est parametre pour du Debian, certaines modifications peuvent etre necessaire pour un autre OS.
+  - Creer une variable `DOCKER_IMAGE_VERSION` qui contiendra la version de l'image de votre application
+  - Creer une variable `TEST_INSTANCE` qui contiendra le nom de l'instance de test, python-test-instance, si vous ne l'avez pas modifié dans les variables terraform du dossier **test_env**
+  - Pour finir créer une variable `GCP_PROJECT` et entrez l'ID de votre projet
 
-6- Sur la machine, dans un terminal ce placer dans le dossier qui contient l'ensemble du repot, creer une nouvelle branche et ce placer dedans. Vous pouvez par exemple appeler la branche cicd.
+### Deploiement dans l'environnement de dev
+
+1- Modification des variables
+
+A l'aide de votre IDE, modifier les variables "gcp_project" et "sa_email" du fichier `variables.tf` dans le dossier *dev_env*
+
+2- Réalisation du push sur la branche dev, afin de lancer le workflow dev.yml
 
 ```
-git checkout -b < nom de la branche >
-```
-
-7- Realiser un commit de notre app
-
-```
-git add .
+git checkout -b dev
+git add ./dev_env/ ./.github/workflows/dev.yml ./docker-app/
 git commit -m "< entrer un commentaire de votre choix >"
-```
-
-8- Push de l'ensemble sur notre repot github
-
-```
-git push origin < nom de la branche cree a l'etape 6>
+git push origin dev
 ```
 
 9- Acceder au repot sur github, dans le bandeau du haut cliquer sur **_"Pull requests"_** dans la nouvelle page cliquer sur **_"New pull request"_**.
