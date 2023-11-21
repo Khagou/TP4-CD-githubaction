@@ -85,11 +85,9 @@ git clone https://github.com/Khagou/TP4-CD-githubaction.git
 
 ### Deploiement dans l'environnement de dev
 
-1- Modification des variables
+1- A l'aide de votre IDE, modifier les variables "gcp_project" et "sa_email" du fichier `variables.tf` dans le dossier *dev_env*, modifiez ensuite le bucket du fichier providers.tf
 
-A l'aide de votre IDE, modifier les variables "gcp_project" et "sa_email" du fichier `variables.tf` dans le dossier *dev_env*
-
-2- Réalisation du push sur la branche dev, afin de lancer le workflow dev.yml
+2- Réalisation du push sur la branche test, afin de lancer le workflow dev.yml
 
 ```
 git checkout -b dev
@@ -98,15 +96,43 @@ git commit -m "< entrer un commentaire de votre choix >"
 git push origin dev
 ```
 
-9- Acceder au repot sur github, dans le bandeau du haut cliquer sur **_"Pull requests"_** dans la nouvelle page cliquer sur **_"New pull request"_**.
-Vous devriez alors voir afficher votre cicd, selectionnez la, github vous affiche alors les modification apporte lors du dernier push.
-Cliquer sur **_"Create pull request"_**, dans la page qui s'est ouverte vous pouvez entrer un commentaire qui est facultatif, cliquer a nouveau sur **_"Create pull request"_** afin de creer la pull request a partir de votre branche cicd.
+3- Le workflow ce lance et va réaliser l'ensemble des jobs. Pour voir votre workflow tourner vous pouvez cliquer le sur bouton **_"Actions"_** sur le bandeau du haut.
 
-10- Le workflow ce lance et va proceder a l'enmsemble des tests et si tout ce deroule bien il lancera le build et le push de l'image docker.
-Pour voir votre workflow tourner vous pouvez cliquer le sur bouton **_"Actions"_** sur le bandeau du haut.
+4- Une fois que le workflow a fini de tourner et que vous avez vérifié sur GCP que votre VM est bien présente et que le conteneur est bien présent dans celle-ci.
+Il ne reste plus qu'a créer une pull request et à la merge sur la branch main pour ajouter votre travail. (pour réaliser une pull request vous pouvez voir le TP3 https://github.com/Khagou/TP3-CI-github-actions/blob/main/Readme.md)
 
-11- Sur la page de votre workflow quand celui-ci est terminé, descendez afin de voir les _"Artifacts"_, c'est la que vous retrouverez l'ensemble des rapports que vous pouvez telecharger.
+### Deploiement dans l'environnement de test
 
-12- Une fois que le workflow a fini de tourner et si tout c'est bien deroule vous vous pouvez retourner sur votre pull request, github devrait vous signaler que tout les test sont passe.
-Il ne reste plus qu'a merge la pull request en cliquant sur le bouton **_"Merge pull request"_**, vous pouvez alors modifier le commentaire, puis cliquer sur **_"Confirm merge"_**.
-Si vous retourner sur la page principal du repot **_"<> Code"_** sur le bandeau du haut, et que vous affichez votre branche main, vous constaterez que votre code a bien ete mit a jour.
+1- A l'aide de votre IDE, modifier les variables "gcp_project" et "sa_email" du fichier `variables.tf` dans le dossier *test_env*, modifiez ensuite le bucket du fichier providers.tf.
+
+2- Réalisation du push sur la branche test, afin de lancer le workflow test.yml
+
+```
+git checkout -b test
+git add ./test_env/ ./.github/workflows/test.yml ./docker-test/ ./app/
+git commit -m "< entrer un commentaire de votre choix >"
+git push origin test
+```
+
+3- Le workflow ce lance et va réaliser l'ensemble des jobs. Pour voir votre workflow tourner vous pouvez cliquer le sur bouton **_"Actions"_** sur le bandeau du haut.
+
+4- Une fois que le workflow a fini de tourner et que vous avez vérifié sur GCP que votre VM est bien présente et que le conteneur app et les images de test (les conteneurs s'éteignent automatiquement à la fin des tests) sont bien présents dans celle-ci.
+Il ne reste plus qu'a créer une pull request et à la merge sur la branch main pour ajouter votre travail. (pour réaliser une pull request vous pouvez voir le TP3 https://github.com/Khagou/TP3-CI-github-actions/blob/main/Readme.md)
+
+### Deploiement dans l'environnement de prod
+
+1- Sur GCP, 
+
+2- Réalisation du push sur la branche test, afin de lancer le workflow test.yml
+
+```
+git checkout -b test
+git add ./test_env/ ./.github/workflows/test.yml ./docker-test/ ./app/
+git commit -m "< entrer un commentaire de votre choix >"
+git push origin test
+```
+
+3- Le workflow ce lance et va réaliser l'ensemble des jobs. Pour voir votre workflow tourner vous pouvez cliquer le sur bouton **_"Actions"_** sur le bandeau du haut.
+
+4- Une fois que le workflow a fini de tourner et que vous avez vérifié sur GCP que votre VM est bien présente et que le conteneur app et les images de test (les conteneurs s'éteignent automatiquement à la fin des tests) sont bien présents dans celle-ci.
+Il ne reste plus qu'a créer une pull request et à la merge sur la branch main pour ajouter votre travail. (pour réaliser une pull request vous pouvez voir le TP3 https://github.com/Khagou/TP3-CI-github-actions/blob/main/Readme.md)
