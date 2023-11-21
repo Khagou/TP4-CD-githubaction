@@ -67,7 +67,9 @@ git clone https://github.com/Khagou/TP4-CD-githubaction.git
 
 6- Une fois le script terminé, récupérez l'adresse email du commpte de service cree et creez lui une cle de compte de service (si vous ne l'avez pas modifie le compte de service devrait s'appeler terraform@<project_id>.iam.gserviceaccount.com), puis accordez le role "administrateur artifact registry" au compte de service compute engine, le nom doit ressembler a quelque chose comme "<project-number>-compute@developer.gserviceaccount.com".
 
-7- Accèder au repot github puis au parametres de celui-ci, dans le bandeau de gauche dans la section securite cliquer sur "secrets and variables" puis Actions. Une page avec 2 onglets ("Secrets" et "Variables") s'ouvre.
+7- Dirigez-vous ensuite sur "Kubernetes Engine" et créez votre cluster en l'appelant "deployment-cluster" dans la région "europe-west1" (vous pouvez choisir un autre nom et une autre région mais cela demandera quelques modification donc les fichiers de deploiement k8s).
+
+8- Accèder au repot github puis au parametres de celui-ci, dans le bandeau de gauche dans la section securite cliquer sur "secrets and variables" puis Actions. Une page avec 2 onglets ("Secrets" et "Variables") s'ouvre.
 
 - **Creation des Secrets**:
 
@@ -121,18 +123,18 @@ Il ne reste plus qu'a créer une pull request et à la merge sur la branch main 
 
 ### Deploiement dans l'environnement de prod
 
-1- Sur GCP, 
+1- Sur GCP, dirigez vous sur l'artifact registry et sur l'image enregistré lors du déploiement du workflow de dev et récupérez le chemin de l'image, cela devrait ressembler à quelque chose comme "europe-west1-docker.pkg.dev/tp4-test-405014/docker-repo/tp4-cd:latest", puis dans le fichier `deployment.yml` du dossier **prod_env**.
 
-2- Réalisation du push sur la branche test, afin de lancer le workflow test.yml
+2- Réalisation du push sur la branche test, afin de lancer le workflow prod.yml
 
 ```
-git checkout -b test
-git add ./test_env/ ./.github/workflows/test.yml ./docker-test/ ./app/
+git checkout -b prod
+git add ./prod_env/ ./.github/workflows/prod.yml
 git commit -m "< entrer un commentaire de votre choix >"
-git push origin test
+git push origin prod
 ```
 
 3- Le workflow ce lance et va réaliser l'ensemble des jobs. Pour voir votre workflow tourner vous pouvez cliquer le sur bouton **_"Actions"_** sur le bandeau du haut.
 
-4- Une fois que le workflow a fini de tourner et que vous avez vérifié sur GCP que votre VM est bien présente et que le conteneur app et les images de test (les conteneurs s'éteignent automatiquement à la fin des tests) sont bien présents dans celle-ci.
+4- Une fois que le workflow a fini de tourner et que vous avez vérifié sur GCP sur votre cluster que votre déploiement s'est bien déroulé.
 Il ne reste plus qu'a créer une pull request et à la merge sur la branch main pour ajouter votre travail. (pour réaliser une pull request vous pouvez voir le TP3 https://github.com/Khagou/TP3-CI-github-actions/blob/main/Readme.md)
